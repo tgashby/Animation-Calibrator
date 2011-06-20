@@ -52,7 +52,7 @@ find_library(
    SDL_IMG_LIBRARY
    NAMES SDL_image
    PATHS ${SDL_IMG_FOLDER}
-   PATH_SUFFICES lib
+   PATH_SUFFIXES lib
    NO_DEFAULT_PATH
 )
 

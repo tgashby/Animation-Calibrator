@@ -1,0 +1,166 @@
+m
+mVisualC/SDL
+mVisualC/tests/testscale
+mXcode
+mXcode-iPhoneOS/Demos
+mXcode-iPhoneOS/Demos/DemosiPhoneOS.xcodeproj
+mXcode-iPhoneOS/Demos/data/bitmapfont
+mXcode-iPhoneOS/Demos/src
+mXcode-iPhoneOS/SDL
+mXcode-iPhoneOS/SDL/SDLiPhoneOS.xcodeproj
+mXcode-iPhoneOS/Template/SDL iOS Application
+mXcode-iPhoneOS/Template/SDL iOS Application/___PROJECTNAME___.xcodeproj
+mXcode-iPhoneOS/Test
+mXcode-iPhoneOS/Test/TestiPhoneOS.xcodeproj
+mXcode/SDL
+mXcode/SDL/SDL.xcodeproj
+mXcode/SDL/pkg-support
+mXcode/SDL/pkg-support/devel-resources
+mXcode/SDL/pkg-support/resources
+mXcode/SDLTest
+mXcode/SDLTest/SDLTest.xcodeproj
+mXcode/TemplatesForXcodeLeopard/SDL Application
+mXcode/TemplatesForXcodeLeopard/SDL Application/___PROJECTNAME___.xcodeproj
+mXcode/TemplatesForXcodeLeopard/SDL Cocoa Application
+mXcode/TemplatesForXcodeLeopard/SDL Cocoa Application/English.lproj/SDLMain.nib
+mXcode/TemplatesForXcodeLeopard/SDL Cocoa Application/___PROJECTNAME___.xcodeproj
+mXcode/TemplatesForXcodeLeopard/SDL OpenGL Application
+mXcode/TemplatesForXcodeLeopard/SDL OpenGL Application/___PROJECTNAME___.xcodeproj
+mXcode/TemplatesForXcodeLeopard/SDL OpenGL Application/atlantis
+mXcode/TemplatesForXcodeSnowLeopard/SDL Application
+mXcode/TemplatesForXcodeSnowLeopard/SDL Application/___PROJECTNAME___.xcodeproj
+mXcode/TemplatesForXcodeSnowLeopard/SDL Cocoa Application
+mXcode/TemplatesForXcodeSnowLeopard/SDL Cocoa Application/English.lproj/SDLMain.nib
+mXcode/TemplatesForXcodeSnowLeopard/SDL Cocoa Application/___PROJECTNAME___.xcodeproj
+mXcode/TemplatesForXcodeSnowLeopard/SDL OpenGL Application
+mXcode/TemplatesForXcodeSnowLeopard/SDL OpenGL Application/___PROJECTNAME___.xcodeproj
+mXcode/TemplatesForXcodeSnowLeopard/SDL OpenGL Application/atlantis
+mXcode/TemplatesForXcodeTiger/SDL Application
+mXcode/TemplatesForXcodeTiger/SDL Application/SDLApp.xcodeproj
+mXcode/TemplatesForXcodeTiger/SDL Cocoa Application
+mXcode/TemplatesForXcodeTiger/SDL Cocoa Application/English.lproj/SDLMain.nib
+mXcode/TemplatesForXcodeTiger/SDL Cocoa Application/SDLCocoaApp.xcodeproj
+mXcode/TemplatesForXcodeTiger/SDL OpenGL Application
+mXcode/TemplatesForXcodeTiger/SDL OpenGL Application/SDLOpenGLApp.xcodeproj
+mXcode/TemplatesForXcodeTiger/SDL OpenGL Application/atlantis
+mXcode/XcodeDocSet
+macinclude
+mandroid-project
+mandroid-project/jni
+mandroid-project/jni/src
+mandroid-project/res/layout
+mandroid-project/res/values
+mandroid-project/src/org/libsdl/app
+mbuild-scripts
+minclude
+msrc
+msrc/atomic
+msrc/audio
+msrc/audio/alsa
+msrc/audio/android
+msrc/audio/arts
+msrc/audio/baudio
+msrc/audio/bsd
+msrc/audio/disk
+msrc/audio/dma
+msrc/audio/dsp
+msrc/audio/dummy
+msrc/audio/esd
+msrc/audio/fusionsound
+msrc/audio/iphoneos
+msrc/audio/macosx
+msrc/audio/nas
+msrc/audio/nds
+msrc/audio/paudio
+msrc/audio/pulseaudio
+msrc/audio/qsa
+msrc/audio/sun
+msrc/audio/ums
+msrc/audio/windib
+msrc/audio/windx5
+msrc/core/android
+msrc/core/windows
+msrc/cpuinfo
+msrc/events
+msrc/events/nds
+msrc/file
+msrc/file/cocoa
+msrc/haptic
+msrc/haptic/darwin
+msrc/haptic/dummy
+msrc/haptic/linux
+msrc/haptic/nds
+msrc/haptic/windows
+msrc/joystick
+msrc/joystick/android
+msrc/joystick/beos
+msrc/joystick/bsd
+msrc/joystick/darwin
+msrc/joystick/dummy
+msrc/joystick/iphoneos
+msrc/joystick/linux
+msrc/joystick/nds
+msrc/joystick/windows
+msrc/libm
+msrc/loadso/beos
+msrc/loadso/dlopen
+msrc/loadso/dummy
+msrc/loadso/macosx
+msrc/loadso/windows
+msrc/main/android
+msrc/main/beos
+msrc/main/dummy
+msrc/main/windows
+msrc/power
+msrc/power/beos
+msrc/power/linux
+msrc/power/macosx
+msrc/power/nds
+msrc/power/uikit
+msrc/power/windows
+msrc/render
+msrc/render/direct3d
+msrc/render/nds
+msrc/render/opengl
+msrc/render/opengles
+msrc/render/opengles2
+msrc/render/software
+msrc/stdlib
+msrc/thread
+msrc/thread/beos
+msrc/thread/generic
+msrc/thread/irix
+msrc/thread/nds
+msrc/thread/pthread
+msrc/thread/windows
+msrc/timer
+msrc/timer/beos
+msrc/timer/dummy
+msrc/timer/nds
+msrc/timer/unix
+msrc/timer/wince
+msrc/timer/windows
+msrc/video
+msrc/video/android
+msrc/video/bwindow
+msrc/video/cocoa
+msrc/video/directfb
+msrc/video/dummy
+msrc/video/nds
+msrc/video/pandora
+msrc/video/uikit
+msrc/video/windows
+msrc/video/x11
+mtest
+mtest/automated
+mtest/automated/audio
+mtest/automated/common
+mtest/automated/platform
+mtest/automated/rect
+mtest/automated/render
+mtest/automated/rwops
+mtest/automated/surface
+mtest/nds-test-progs/general
+mtest/nds-test-progs/testscale
+mtest/nds-test-progs/testsprite2
+mtest/nds-test-progs/testspriteminimal
