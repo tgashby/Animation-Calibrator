@@ -8,12 +8,23 @@ project(Animation-Calibrator)
 # Sources
 set(
    SOURCES
-   src/
+   src/Animation.cpp
+   src/AnimationCalibrator.cpp
+   src/AnimationManager.cpp
+   src/InputManager.cpp
+   src/TextureManager.cpp
 )
 
-# Headers
+# Includes
 set(
-   HEADERS
+   INCLUDES
+   include/Animation.h
+   include/AnimationManager.h
+   include/InputManager.h
+   include/Keys.h
+   include/SDLIncludes.h
+   include/Texture.h
+   include/TextureManager.h   
 )
 
 # Non-System Libraries
@@ -89,7 +100,7 @@ add_executable(
    WIN32
    MACOSX_BUNDLE
    ${SOURCES}
-   ${HEADERS}
+   ${INCLUDES}
 )
 
 # Link all the libraries
