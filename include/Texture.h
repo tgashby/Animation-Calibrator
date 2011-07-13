@@ -4,6 +4,7 @@
 
 namespace TGA
 {
+	// A texture section with coordinates
 	struct Section
 	{
 		GLfloat xMin;
@@ -12,6 +13,7 @@ namespace TGA
 		GLfloat yMax;
 	};
 
+	// A texture with ID, filename, width, and height
 	struct Texture
 	{
 		GLuint textureID;
@@ -20,6 +22,7 @@ namespace TGA
 		GLfloat height;
 	};
 
+	// A texture section with ID, section, width, and height
 	struct TextureSection
 	{
 		GLint sectionID;

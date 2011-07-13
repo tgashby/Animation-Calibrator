@@ -17,7 +17,7 @@ namespace TGA
 		return 0;
 	}
 
-	GLuint AnimationManager::createAnimation( std::vectore<GLuint> frames, Uint32 delay )
+	GLuint AnimationManager::createAnimation( std::vector<GLuint> frames, Uint32 delay )
 	{
 		return 0;
 	}
