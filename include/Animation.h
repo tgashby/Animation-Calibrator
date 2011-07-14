@@ -1,13 +1,17 @@
 #pragma once
 
-#include "../include/SDLIncludes.h"
-
+#include "../include/ProjIncludes.h"
+#include "../include/Texture.h"
+ 
 namespace TGA
 {
 	class Animation
 	{
+		friend class AnimationManager;
+
 	public:
 		Animation();
+		Animation(Texture* texture);
 		~Animation();
 
 		// Update the animation
@@ -22,6 +26,12 @@ namespace TGA
 		// Move the animation back to its first frame
 		void reset();
 
+		// Delete the animation
+		void deleteMe();
+
+		// Add a frame to the animation
+		void addFrame(SDL_Rect frameRect, Uint32 delay);
+
 		// Go to a specified frame
 		void goToFrame(GLuint frame);
 
@@ -29,22 +39,21 @@ namespace TGA
 		void setRepetitions(int repetitions);
 
 		// Set the texture of a particular frame
-		void setTexture(GLuint textureID, GLuint frame);
+		void setTexture(Texture* texture);
 
 		// Set the delay of the specified frame
-		void setDelay(Uint32 delay, GLuint frame);
+		void setDelay(GLuint frame, Uint32 delay);
 
 		// Draw the animation at a location
 		void draw(GLfloat xPos, GLfloat yPos);
 
 		GLuint getFrameCount();
-
 	private:
-		// All textures that make up this animation
-		std::vector<GLuint> textures;
+		// The texture panel that has all the frames
+		Texture* texture;
 
-		// All delays between textures
-		std::vector<Uint32> delays;
+		// The individual frames, with delays
+		std::vector<std::map<SDL_Rect, Uint32>> frames;
 
 		GLuint currFrame;
 

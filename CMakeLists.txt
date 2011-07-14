@@ -12,6 +12,7 @@ set(
    src/AnimationCalibrator.cpp
    src/AnimationManager.cpp
    src/InputManager.cpp
+   src/Texture.cpp
    src/TextureManager.cpp
 )
 
@@ -21,8 +22,8 @@ set(
    include/Animation.h
    include/AnimationManager.h
    include/InputManager.h
-   include/Keys.h
-   include/SDLIncludes.h
+   include/Key.h
+   include/ProjIncludes.h
    include/Texture.h
    include/TextureManager.h   
 )

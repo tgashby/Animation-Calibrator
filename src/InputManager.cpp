@@ -12,18 +12,38 @@ namespace TGA
 
 	}
 
-	bool InputManager::keyDown(Keys key)
+	bool InputManager::keyDown(Key key)
 	{
-		return false;
-	}
-
-	Uint32 InputManager::timeHeld( Keys key )
-	{
-
+		// Return the keystate of the desired key
 	}
 
 	void InputManager::update()
 	{
+		// Create an SDL_Event
 
+		// WHILE there are still events to process
+
+			// SWITCH based on the event
+
+				// CASE keydown
+				
+					// Set the keystate to true
+
+				// CASE keyup
+			
+					// Set the keystate to false
+
+				// CASE mouseClick
+
+					// Update mouse coords
+
+			// ENDSWITCH
+
+		// ENDWHILE
+	}
+
+	SDL_Point InputManager::getMouseCoords()
+	{
+		// Return an SDL_Point made of mouse coordinates
 	}
 };

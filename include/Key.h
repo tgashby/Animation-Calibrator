@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../include/SDLIncludes.h"
+#include "../include/ProjIncludes.h"
 
 namespace TGA
 {
-	enum Keys
+	enum Key
 	{
 		key_A = SDLK_a,
 		key_B = SDLK_b,

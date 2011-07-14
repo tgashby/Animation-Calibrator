@@ -4,76 +4,88 @@ namespace TGA
 {
 	AnimationManager::AnimationManager()
 	{
-
+		// Clear the animations
 	}
 
 	AnimationManager::~AnimationManager()
 	{
-
-	}
-
-	GLuint AnimationManager::createAnimation( std::vector<GLuint> frames, std::vector<Uint32> delays )
-	{
-		return 0;
-	}
-
-	GLuint AnimationManager::createAnimation( std::vector<GLuint> frames, Uint32 delay )
-	{
-		return 0;
-	}
-
-	void AnimationManager::remove( GLuint animationID )
-	{
-
+		// CALL removeAll
 	}
 
 	void AnimationManager::removeAll()
 	{
+		// FOR all elements in animations
 
-	}
+			// IF the animation is not NULL
 
-	void AnimationManager::pause( GLuint animationID )
-	{
+				// Delete the animation
 
+			// ENDIF
+
+		// ENDFOR
+
+		// Clear the animations
 	}
 
 	void AnimationManager::pauseAll()
 	{
+		// FOR all elements in animations
 
+			// CALL pause() on the current animation
+
+		// ENDFOR
 	}
 
-	void AnimationManager::update( GLuint animationID )
+	void AnimationManager::resumeAll()
 	{
+		// FOR all elements in animations
 
+			// CALL resume() on the current animation
+
+		// ENDFOR
 	}
-
+	
 	void AnimationManager::updateAll()
 	{
+		// FOR all elements in animations
 
-	}
+			// CALL update() on the current animation
 
-	void AnimationManager::reset( GLuint animationID )
-	{
-
+		// ENDFOR
 	}
 
 	void AnimationManager::resetAll()
 	{
+		// FOR all elements in animations
 
+			// CALL reset() on the current animation
+
+		// ENDFOR
 	}
 
-	void AnimationManager::setRepetitions( GLuint animationID, GLuint frame )
+	void AnimationManager::addAnimation(Animation* animation)
 	{
-
+		// Tack this animation onto animations
 	}
 
-	void AnimationManager::goToFrame( GLuint animationID, GLuint frame )
+	void AnimationManager::removeAnimation(Animation* animation)
 	{
+		// Create an iterator and set it to find() on the vector
 
-	}
+		// IF the animation was found
 
-	void AnimationManager::drawAnimation( GLuint animationID, GLfloat xPos, GLfloat yPos )
-	{
+			// IF the animation is the last element
 
+				// CALL erase on the last element
+			
+			// ELSE
+
+				// Replace the animation with the last animation in the vector
+
+				// Erase the last animation
+
+			// ENDIF
+
+		// Delete the animation
 	}
 }
