@@ -26,6 +26,9 @@ namespace TGA
 		// Move the animation back to its first frame
 		void reset();
 
+		// Determine if the animation is done playing
+		bool isDone();
+
 		// Delete the animation
 		void deleteMe();
 
@@ -44,10 +47,14 @@ namespace TGA
 		// Set the delay of the specified frame
 		void setDelay(GLuint frame, Uint32 delay);
 
+		// Change the frame's bounds
+		void setFrameBounds(GLuint frame, SDL_Rect newBounds);
+
 		// Draw the animation at a location
 		void draw(GLfloat xPos, GLfloat yPos);
 
 		GLuint getFrameCount();
+
 	private:
 		// The texture panel that has all the frames
 		Texture* texture;
@@ -61,6 +68,7 @@ namespace TGA
 		Uint32 lastUpdate;
 
 		bool paused;
+		bool done;
 		int repetitions;
 	};
 }

@@ -2,15 +2,9 @@
 
 namespace TGA
 {
-	InputManager::InputManager()
-	{
+	InputManager::InputManager() {}
 
-	}
-
-	InputManager::~InputManager()
-	{
-
-	}
+	InputManager::~InputManager() {}
 
 	bool InputManager::keyDown(Key key)
 	{

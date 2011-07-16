@@ -2,8 +2,6 @@
 
 namespace TGA
 {
-
-
 	TextureManager::TextureManager()
 	{
 		// Clear all textures

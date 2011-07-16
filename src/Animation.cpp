@@ -20,16 +20,15 @@ namespace TGA
 		// Initialize frames
 
 		// Initialize other variables to default values
+
+		// Add this animation to the Animation Manager
 	}
 
-	Animation::~Animation()
-	{
-		
-	}
+	Animation::~Animation()	{}
 
 	void Animation::update()
 	{
-		// IF the texture is NOT empty, AND the animation is NOT paused, AND repetitions is NOT 0, AND there are frames
+		// IF the texture is NOT empty, AND the animation is NOT paused OR NOT done, AND repetitions is NOT 0, AND there are frames
 			
 			// IF enough time has passed based on the current frame and its delay
 
@@ -48,6 +47,12 @@ namespace TGA
 						// ELSE
 
 							// Decrement repetitions
+
+							// IF repetitions is 0
+
+								// Set the animation to done
+
+							// ENDIF
 
 						// ENDIF
 		
@@ -76,7 +81,13 @@ namespace TGA
 	void Animation::reset()
 	{
 		// Set the current frame back to 0
+		// Set done to false
 		// Update lastUpdate
+	}
+
+	bool Animation::isDone()
+	{
+		// Return done
 	}
 
 	void Animation::deleteMe()
@@ -91,8 +102,13 @@ namespace TGA
 
 	void Animation::goToFrame(GLuint frame)
 	{
-		// Set the current frame to this frame
-		// Update lastUpdate
+		// IF the frame desired exists
+		
+			// Set the current frame to this frame
+			
+			// Update lastUpdate
+		
+		// ENDIF
 	}
 
 	void Animation::setRepetitions(int repetitions)
@@ -107,7 +123,20 @@ namespace TGA
 
 	void Animation::setDelay(GLuint frame, Uint32 delay)
 	{
-		// Get the desired frame and set it's delay to this one
+		// IF the frame exists
+		
+			// Get the desired frame and set it's delay to this one
+
+		// ENDIF
+	}
+	
+	void Animation::setFrameBounds(GLuint frame, SDL_Rect newBounds)
+	{
+		// IF the frame exists
+
+			// Get the desired frame and update it's bounds
+
+		// ENDIF
 	}
 
 	void Animation::draw(GLfloat xPos, GLfloat yPos)

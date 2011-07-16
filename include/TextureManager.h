@@ -18,8 +18,9 @@ namespace TGA
 		void removeAllTextures();
 
 	protected:
+		// Add a texture to be managed
 		void addTexture(Texture* texture);
-
+		// Remove a texture from being managed
 		void removeTexture(Texture* texture);
 
 		// The stored textures
