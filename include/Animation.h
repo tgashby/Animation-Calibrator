@@ -2,6 +2,7 @@
 
 #include "../include/ProjIncludes.h"
 #include "../include/Texture.h"
+#include "../include/AnimationManager.h"
  
 namespace TGA
 {
@@ -29,6 +30,9 @@ namespace TGA
 		// Determine if the animation is done playing
 		bool isDone();
 
+		// Determine if the animation is paused
+		bool isPaused();
+
 		// Delete the animation
 		void deleteMe();
 
@@ -54,18 +58,17 @@ namespace TGA
 		void draw(GLfloat xPos, GLfloat yPos);
 
 		GLuint getFrameCount();
-
 	private:
 		// The texture panel that has all the frames
 		Texture* texture;
 
 		// The individual frames, with delays
-		std::vector<std::map<SDL_Rect, Uint32>> frames;
+		std::vector<std::pair<SDL_Rect, Uint32> > frames;
 
 		GLuint currFrame;
 
 		// The last time this animation was updated
-		Uint32 lastUpdate;
+		Uint64 lastUpdate;
 
 		bool paused;
 		bool done;

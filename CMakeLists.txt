@@ -25,7 +25,8 @@ set(
    include/Key.h
    include/ProjIncludes.h
    include/Texture.h
-   include/TextureManager.h   
+   include/TextureManager.h
+   include/Singleton.h
 )
 
 # Non-System Libraries
