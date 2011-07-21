@@ -1,4 +1,5 @@
 #include "../include/Animation.h"
+#include "../include/AnimationManager.h"
 
 namespace TGA
 {
@@ -39,10 +40,10 @@ namespace TGA
 	void Animation::update()
 	{
 		// IF the texture is NOT empty, AND the animation is NOT paused OR NOT done, AND repetitions is NOT 0, AND there are frames
-		if(texture != NULL && (!paused || !done) && repetitions != 0 && frames.size() > 0)	
+		if(texture != NULL && (!paused && !done) && repetitions != 0 && frames.size() > 0)	
 		{
 			// IF enough time has passed based on the current frame and its delay
-			if(1000/frames.at(currFrame).second < (SDL_GetPerformanceCounter() - lastUpdate))
+			if(frames.at(currFrame).second < (SDL_GetPerformanceCounter() - lastUpdate))
 			{
 				// Increment the current frame
 				currFrame++;
@@ -145,6 +146,8 @@ namespace TGA
 
 	void Animation::setTexture(Texture* texture)
 	{
+		delete this->texture;
+
 		// Set texture
 		this->texture = texture;
 	}

@@ -1,4 +1,5 @@
 #include "../include/Texture.h"
+#include "../include/TextureManager.h"
 
 namespace TGA
 {
@@ -33,6 +34,7 @@ namespace TGA
 		{
 			// Print an error message and stop
 			std::cout << "Error:" << SDL_GetError() << std::endl;
+			return;
 		}
 
 		// CALL SDL_DisplayFormatAlpha(image)
@@ -42,8 +44,8 @@ namespace TGA
 		fileName = imgFileName;
 
 		// Set the width and height to the appropriate surface values
-		width = image->w;
-		height = image->h;
+		width = (GLfloat)image->w;
+		height = (GLfloat)image->h;
 
 		// Generate the texture (glGenTextures)
 		glGenTextures(1, &texture);
@@ -132,16 +134,16 @@ namespace TGA
 		glBegin(GL_QUADS);
 
 			// Assign the texture coords for each corner and the vertexes (4 blocks of 2 lines of glTexCoord, glVertex)
-			glTexCoord2d(sectX, sectY);
+			glTexCoord2d(sectX / width, sectY / height);
 			glVertex2f(xPos, yPos);
 
-			glTexCoord2d(sectWidth, 0);
+			glTexCoord2d(sectWidth / width, sectY / height);
 			glVertex2f(xPos + width, yPos);
 
-			glTexCoord2d(sectWidth, sectHeight);
+			glTexCoord2d(sectWidth / width, sectHeight / height);
 			glVertex2f(xPos + width, yPos + height);
 
-			glTexCoord2d(0, sectHeight);
+			glTexCoord2d(sectX / width, sectHeight / height);
 			glVertex2f(xPos, yPos + height);
 		// End drawing
 		glEnd();

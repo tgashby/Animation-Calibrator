@@ -96,6 +96,8 @@ include_directories(
    ${SDL_IMG_FOLDER}/include
 )
 
+set(LINK_FLAGS "${LINK_FLAGS} -mwindows -mconsole")
+
 # Get everything together for the executable
 add_executable(
    Animation-Calibrator

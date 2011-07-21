@@ -1,11 +1,14 @@
 #pragma once
 
+#include "../include/ProjIncludes.h"
 #include "../include/Texture.h"
 
 namespace TGA
 {
 	class TextureManager
 	{
+		friend class Texture;
+
 	public:
 		// Constructors/Destructor
 		TextureManager();
@@ -24,6 +27,6 @@ namespace TGA
 		void removeTexture(Texture* texture);
 
 		// The stored textures
-		std::vector<Texture*> textures;
+		std::vector< Texture* > textures;
 	};
 }

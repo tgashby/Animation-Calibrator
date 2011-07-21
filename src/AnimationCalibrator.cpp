@@ -14,16 +14,10 @@ void setDelay(TGA::Animation&);
 int main(int argc, char **argv)
 {
 	// Create a Texture to store the texture
-	TGA::Texture* texture;
+	TGA::Texture* texture = new TGA::Texture();
 
 	// Create an Animation to store the animation
 	TGA::Animation animation;
-
-	// Create an SDL_Rect to store a frame's boundaries
-	SDL_Rect frameBounds;
-
-	// Create a Uint32 to store the delay (in ms)
-	Uint32 currDelay;
 
 	// Create a string to store the file name
 	std::string fileName;
@@ -56,7 +50,9 @@ int main(int argc, char **argv)
 	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-	SDL_Window* window = SDL_CreateWindow("Animation-Calibrator", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 512);
+	SDL_Window* window = SDL_CreateWindow("Animation-Calibrator", SDL_WINDOWPOS_CENTERED, 
+		SDL_WINDOWPOS_CENTERED, 1024, 512, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+
 	SDL_GLContext glContext = SDL_GL_CreateContext(window);
 	//////////////////////////////////////////////////////////////////////////
 
@@ -77,14 +73,18 @@ int main(int argc, char **argv)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	glOrtho(0, 1024, 512, 0, -1, 1);
+
 	glLoadIdentity();
 	//////////////////////////////////////////////////////////////////////////
+
+	SDL_ClearError();
 
 	// Initialize the Texture with loadTexture
 	texture->loadTexture(fileName);
 
 	// WHILE the texture is null
-	while(texture == NULL)
+	while(SDL_GetError() != "")
 	{
 		// Prompt for a new image
 		std::cout << "Enter the name of the image to try: ";
@@ -94,6 +94,8 @@ int main(int argc, char **argv)
 
 		// Initialize the Texture with loadTexture
 		texture->loadTexture(fileName);
+
+		SDL_ClearError();
 	}
 	// ENDWHILE
 
@@ -187,6 +189,7 @@ void displayMenu()
 		<< "A - add a frame(s)\n"
 		<< "C - change a frame's dimensions\n"
 		<< "D - set the delay of a frame\n"
+		<< "T - change the animation image\n"
 		<< "P - play the entire animation\n"
 		<< "V - view a single frame\n"
 		<< "Q - quit the program\n";
@@ -259,6 +262,8 @@ void playAnimation(TGA::Animation& animation)
 	// WHILE the animation is not done
 	while(!animation.isDone())
 	{
+		animation.reset();
+
 		// Update it
 		animation.update();
 
@@ -281,11 +286,13 @@ void resetTexture(TGA::Animation& animation)
 	getline(std::cin, fileName);
 
 	// Initialize the Texture with loadTexture
-	TGA::Texture* texture;
+	TGA::Texture* texture = new TGA::Texture();
+
+	SDL_ClearError();
 	texture->loadTexture(fileName);
 	
 	// WHILE the texture is null
-	while(texture == NULL)
+	while(SDL_GetError() != "")
 	{
 		// Prompt for a new image
 		std::cout << "Enter the name of the image to try: ";
@@ -295,6 +302,7 @@ void resetTexture(TGA::Animation& animation)
 
 		// Initialize the Texture with loadTexture
 		texture->loadTexture(fileName);
+		SDL_ClearError();
 	}
 	// ENDWHILE
 
