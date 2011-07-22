@@ -40,7 +40,7 @@ namespace TGA
 	void Animation::update()
 	{
 		// IF the texture is NOT empty, AND the animation is NOT paused OR NOT done, AND repetitions is NOT 0, AND there are frames
-		if(texture != NULL && (!paused && !done) && repetitions != 0 && frames.size() > 0)	
+		if(texture != NULL && !paused && !done && frames.size() > 0)	
 		{
 			// IF enough time has passed based on the current frame and its delay
 			if(frames.at(currFrame).second < (SDL_GetPerformanceCounter() - lastUpdate))
@@ -96,6 +96,7 @@ namespace TGA
 
 		// Set done to false
 		done = false;
+		paused = false;
 
 		// Update lastUpdate
 		lastUpdate = SDL_GetPerformanceCounter();
@@ -122,6 +123,16 @@ namespace TGA
 	{
 		// Tack this frame and it's delay onto the end of frames
 		frames.push_back(std::make_pair(frameRect, delay));
+	}
+
+	void Animation::deleteFrame(GLuint frameNum)
+	{
+		frames.erase(frames.begin() + frameNum);
+	}
+
+	void Animation::clearFrames()
+	{
+		frames.clear();
 	}
 
 	void Animation::goToFrame(GLuint frame)

@@ -24,7 +24,7 @@ namespace TGA
 		deleteMe();
 	}
 
-	void Texture::loadTexture(std::string imgFileName)
+	bool Texture::loadTexture(std::string imgFileName)
 	{
 		// Create an SDL_Surface with a call to IMG_Load and the fileName
 		SDL_Surface* image = IMG_Load(imgFileName.c_str());
@@ -34,7 +34,7 @@ namespace TGA
 		{
 			// Print an error message and stop
 			std::cout << "Error:" << SDL_GetError() << std::endl;
-			return;
+			return false;
 		}
 
 		// CALL SDL_DisplayFormatAlpha(image)
@@ -68,6 +68,7 @@ namespace TGA
 
 		// Add this texture to the TextureManager
 		Singleton<TextureManager>::GetSingletonPtr()->addTexture(this);
+		return true;
 	}
 
 	void Texture::deleteMe()
@@ -84,6 +85,8 @@ namespace TGA
 
 	void Texture::draw(GLfloat xPos, GLfloat yPos)
 	{
+		glClear(GL_COLOR_BUFFER_BIT);
+
 		// Push the current matrix (glPushMatrix)
 		glPushMatrix();
 
@@ -122,6 +125,8 @@ namespace TGA
 
 	void Texture::drawSection(GLfloat xPos, GLfloat yPos, int sectX, int sectY, int sectWidth, int sectHeight)
 	{
+		glClear(GL_COLOR_BUFFER_BIT);
+
 		// Push the current matrix (glPushMatrix)
 		glPushMatrix();
 
@@ -130,21 +135,26 @@ namespace TGA
 		// Bind the texture (glBindTexture)
 		glBindTexture(GL_TEXTURE_2D, texture);
 
+		glMatrixMode(GL_TEXTURE);
+		glLoadIdentity();
+		glScalef(1/width, 1/height, 1);
+
 		// Begin drawing
 		glBegin(GL_QUADS);
 
 			// Assign the texture coords for each corner and the vertexes (4 blocks of 2 lines of glTexCoord, glVertex)
-			glTexCoord2d(sectX / width, sectY / height);
+			glTexCoord2d(sectX, sectY);
 			glVertex2f(xPos, yPos);
 
-			glTexCoord2d(sectWidth / width, sectY / height);
+			glTexCoord2d(sectWidth, sectY);
 			glVertex2f(xPos + width, yPos);
 
-			glTexCoord2d(sectWidth / width, sectHeight / height);
+			glTexCoord2d(sectWidth, sectHeight);
 			glVertex2f(xPos + width, yPos + height);
 
-			glTexCoord2d(sectX / width, sectHeight / height);
+			glTexCoord2d(sectX, sectHeight);
 			glVertex2f(xPos, yPos + height);
+
 		// End drawing
 		glEnd();
 

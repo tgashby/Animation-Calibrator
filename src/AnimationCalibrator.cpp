@@ -5,16 +5,23 @@
 
 void displayMenu();
 void addFrame(TGA::Animation&);
+void deleteFrame(TGA::Animation&);
+void clearFrames(TGA::Animation&);
 void viewFrame(TGA::Animation&);
 void playAnimation(TGA::Animation&);
 void resetTexture(TGA::Animation&);
 void setDimensions(TGA::Animation&);
 void setDelay(TGA::Animation&);
 
+SDL_Window* window;
+TGA::Texture* texture;
+int SCREEN_WIDTH = 1024;
+int SCREEN_HEIGHT = 512;
+
 int main(int argc, char **argv)
 {
 	// Create a Texture to store the texture
-	TGA::Texture* texture = new TGA::Texture();
+	texture = new TGA::Texture();
 
 	// Create an Animation to store the animation
 	TGA::Animation animation;
@@ -40,7 +47,7 @@ int main(int argc, char **argv)
 
 	//////////////////////////////////////////////////////////////////////////
 	// Initialize the SDL window (1024x512) and GL context and all that stuff
-	SDL_Init(SDL_INIT_VIDEO);
+	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
 
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
@@ -50,8 +57,8 @@ int main(int argc, char **argv)
 	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-	SDL_Window* window = SDL_CreateWindow("Animation-Calibrator", SDL_WINDOWPOS_CENTERED, 
-		SDL_WINDOWPOS_CENTERED, 1024, 512, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow("Animation-Calibrator", SDL_WINDOWPOS_CENTERED, 
+		SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 
 	SDL_GLContext glContext = SDL_GL_CreateContext(window);
 	//////////////////////////////////////////////////////////////////////////
@@ -61,6 +68,8 @@ int main(int argc, char **argv)
 	glMatrixMode(GL_PROJECTION);
 
 	glLoadIdentity();
+
+	glOrtho(0.0, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0, 0.0, 1000.0);
 
 	glDisable(GL_DEPTH_TEST);
 
@@ -73,29 +82,17 @@ int main(int argc, char **argv)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	glOrtho(0, 1024, 512, 0, -1, 1);
-
 	glLoadIdentity();
 	//////////////////////////////////////////////////////////////////////////
 
-	SDL_ClearError();
-
-	// Initialize the Texture with loadTexture
-	texture->loadTexture(fileName);
-
 	// WHILE the texture is null
-	while(SDL_GetError() != "")
+	while(!texture->loadTexture(fileName))
 	{
 		// Prompt for a new image
 		std::cout << "Enter the name of the image to try: ";
 
 		// Take the input and store the filename
 		getline(std::cin, fileName);
-
-		// Initialize the Texture with loadTexture
-		texture->loadTexture(fileName);
-
-		SDL_ClearError();
 	}
 	// ENDWHILE
 
@@ -122,6 +119,13 @@ int main(int argc, char **argv)
 				break;
 				// ENDCASE
 
+			case 'D':
+				deleteFrame(animation);
+				break;
+
+			case 'X':
+				clearFrames(animation);
+
 			// CASE Change frame dimensions ('C')
 			case 'C':
 				// CALL setDimensions(animation)
@@ -130,7 +134,7 @@ int main(int argc, char **argv)
 			// ENDCASE
 
 			// CASE change delay ('D')
-			case 'D':
+			case 'R':
 				// CALL setDelay(animation)
 				setDelay(animation);
 				break;
@@ -177,7 +181,6 @@ int main(int argc, char **argv)
 	}
 	// ENDWHILE
 
-		
 	return 0;
 }
 
@@ -186,50 +189,101 @@ void displayMenu()
 	// Display the menu options...
 	std::cout  
 		<< "Menu:\n" 
-		<< "A - add a frame(s)\n"
+		<< "A - add frame(s)\n"
+		<< "D - delete frame(s)\n"
+		<< "X - clear all frames\n"
 		<< "C - change a frame's dimensions\n"
-		<< "D - set the delay of a frame\n"
+		<< "R - set the delay of a frame\n"
 		<< "T - change the animation image\n"
 		<< "P - play the entire animation\n"
 		<< "V - view a single frame\n"
 		<< "Q - quit the program\n";
+
+	std::cout << "SDL ERROR: " << SDL_GetError() << std::endl;
+
+	std::cout << "Command: ";
 }
 
 void addFrame(TGA::Animation& animation)
 {
 	bool adding = true;
 	Uint32 delay;
+	SDL_Rect frameRect;
+	char keepGoing;
 
 	// WHILE the user still wants to enter frames
 	while(adding)
 	{
 		// Prompt the user for the next frame dimensions, delay in ms (one per line)
-		std::cout << "Enter the top-left x point (0 if image is laid out vertically), " 
-			<< "the top-left y point (0 if image is laid out horizontally), the width, the height, " 
-			<< "and a delay (in milliseconds)";
-
-		SDL_Rect frameRect;
-
-		// Store the xPos
+		std::cout << "Enter the top-left x point (0 if image is laid out vertically): ";
 		std::cin >> frameRect.x;
 
 		// Store yPos
+		std::cout << "Enter the top-left y point (0 if image is laid out horizontally): ";
 		std::cin >> frameRect.y;
 
 		// Store the width
+		std::cout << "Enter the width: ";
 		std::cin >> frameRect.w;
 
 		// Store the height
+		std::cout << "Enter the height: ";
 		std::cin >> frameRect.h;
 
 		// Store the delay
+		std::cout << "Enter the delay (in milliseconds): ";
 		std::cin >> delay;
 
 		// Add this frame to the Animation
-		animation.addFrame(frameRect, delay);
+		animation.addFrame(frameRect, delay * 1000);
+
+		std::cout << "Frame added.\n";
+
+		std::cout << "Keep adding frames (Y/N): ";
+		std::cin >> keepGoing;
+
+		if(keepGoing == 'N')
+		{
+			adding = false;
+		}
 	}
 	// ENDWHILE
 }
+
+void deleteFrame(TGA::Animation& animation)
+{
+	bool deleting = true;
+	GLuint frameNum;
+	char keepGoing;
+
+	// WHILE the user still wants to enter frames
+	while(deleting)
+	{
+		// Prompt the user for the next frame dimensions, delay in ms (one per line)
+		std::cout << "Enter frame number to delete: ";
+		std::cin >> frameNum;
+
+		animation.deleteFrame(frameNum);
+
+		std::cout << "Removed frame " << frameNum << ".\n";
+
+		std::cout << "Keep deleting frames (Y/N): ";
+		std::cin >> keepGoing;
+
+		if(keepGoing == 'N')
+		{
+			deleting = false;
+		}
+	}
+	// ENDWHILE
+}
+
+void clearFrames(TGA::Animation& animation)
+{
+	animation.clearFrames();
+	std::cout << "All frames removed.";
+}
+
 
 void viewFrame(TGA::Animation& animation)
 {
@@ -243,10 +297,10 @@ void viewFrame(TGA::Animation& animation)
 	animation.goToFrame(frame);
 
 	// Draw the Animation
-	animation.draw(0, 0);
+	animation.draw(SCREEN_WIDTH / 2 - texture->getWidth(), SCREEN_HEIGHT / 2 - texture->getHeight());
 
 	// Swap buffers
-	SDL_GL_SwapBuffers();
+	SDL_GL_SwapWindow(window);	
 }
 
 void playAnimation(TGA::Animation& animation)
@@ -259,19 +313,19 @@ void playAnimation(TGA::Animation& animation)
 	std::cin >> repetitions;
 	animation.setRepetitions(repetitions);
 
+	animation.reset();
+
 	// WHILE the animation is not done
 	while(!animation.isDone())
 	{
-		animation.reset();
-
 		// Update it
 		animation.update();
 
 		// Draw it
-		animation.draw(0, 0);
+		animation.draw(SCREEN_WIDTH / 2 - texture->getWidth(), SCREEN_HEIGHT / 2 - texture->getHeight());
 
 		// Swap buffers
-		SDL_GL_SwapBuffers();
+		SDL_GL_SwapWindow(window);
 	}
 	// ENDWHILE
 }
@@ -284,29 +338,20 @@ void resetTexture(TGA::Animation& animation)
 	// Store filename
 	std::string fileName;
 	getline(std::cin, fileName);
-
-	// Initialize the Texture with loadTexture
-	TGA::Texture* texture = new TGA::Texture();
-
-	SDL_ClearError();
-	texture->loadTexture(fileName);
-	
+		
 	// WHILE the texture is null
-	while(SDL_GetError() != "")
+	while(!(texture->loadTexture(fileName)))
 	{
 		// Prompt for a new image
 		std::cout << "Enter the name of the image to try: ";
 
 		// Take the input and store the filename
 		getline(std::cin, fileName);
-
-		// Initialize the Texture with loadTexture
-		texture->loadTexture(fileName);
-		SDL_ClearError();
 	}
 	// ENDWHILE
 
 	animation.setTexture(texture);
+	animation.clearFrames();
 }
 
 void setDimensions(TGA::Animation& animation)
@@ -351,5 +396,6 @@ void setDelay(TGA::Animation& animation)
 	std::cin >> delay;
 
 	// Set new frame delay
-	animation.setDelay(frame, delay);
+	animation.setDelay(frame, delay * 1000);
 }
+

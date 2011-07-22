@@ -16,7 +16,7 @@ namespace TGA
 		~Texture();
 
 		// Load texture from an image
-		void loadTexture(std::string imgFileName);
+		bool loadTexture(std::string imgFileName);
 
 		// Delete texture
 		void deleteMe();

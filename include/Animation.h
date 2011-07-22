@@ -38,6 +38,12 @@ namespace TGA
 		// Add a frame to the animation
 		void addFrame(SDL_Rect frameRect, Uint32 delay);
 
+		// Delete a frame
+		void deleteFrame(GLuint frameNum);
+
+		// Clear all frames
+		void clearFrames();
+
 		// Go to a specified frame
 		void goToFrame(GLuint frame);
 
