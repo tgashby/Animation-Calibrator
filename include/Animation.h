@@ -63,6 +63,9 @@ namespace TGA
 		void draw(GLfloat xPos, GLfloat yPos);
 
 		GLuint getFrameCount();
+
+		std::string printFrames();
+
 	private:
 		// The texture panel that has all the frames
 		Texture* texture;

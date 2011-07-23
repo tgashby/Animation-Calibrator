@@ -10,7 +10,6 @@ namespace TGA
 		friend class Texture;
 
 	public:
-		// Constructors/Destructor
 		TextureManager();
 		~TextureManager();
 
@@ -27,6 +26,6 @@ namespace TGA
 		void removeTexture(Texture* texture);
 
 		// The stored textures
-		std::vector< Texture* > textures;
+		std::vector<Texture*> textures;
 	};
 }

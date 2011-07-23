@@ -28,7 +28,7 @@ namespace TGA
 		// Reset all animations
 		void resetAll();
 
-	private:
+	protected:
 		// Add animation to be managed
 		void addAnimation(Animation* animation);
 

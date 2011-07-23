@@ -4,45 +4,37 @@
 #include "../include/ProjIncludes.h"
 
 void displayMenu();
-void addFrame(TGA::Animation&);
-void deleteFrame(TGA::Animation&);
-void clearFrames(TGA::Animation&);
-void viewFrame(TGA::Animation&);
-void playAnimation(TGA::Animation&);
-void resetTexture(TGA::Animation&);
-void setDimensions(TGA::Animation&);
-void setDelay(TGA::Animation&);
+void addFrame();
+void deleteFrame();
+void clearFrames();
+void viewFrame();
+void playAnimation();
+void resetTexture();
+void setDimensions();
+void setDelay();
+void printFrames();
 
 SDL_Window* window;
 TGA::Texture* texture;
+TGA::Animation animation;
 int SCREEN_WIDTH = 1024;
 int SCREEN_HEIGHT = 512;
 
 int main(int argc, char **argv)
 {
-	// Create a Texture to store the texture
 	texture = new TGA::Texture();
 
-	// Create an Animation to store the animation
-	TGA::Animation animation;
-
-	// Create a string to store the file name
 	std::string fileName;
 
-	// Create a letter to store the desired command
 	char command;
 
-	// Create a boolean to determine if the user is done
 	bool running;
 
-	// Print out instructions for use
-	std::cout << "Animation Calibrator:\n" << "A program to run through animations and tweak frame delays and settings.\n"
+	std::cout << "Animation Calibrator:\n" << "A program to run through animations and tweak frame delays and settings.\n\n"
 		<< "Please have your animation in a single file with frames laid out however you want.\n"; 
 
-	// Ask the user for the name of the image
 	std::cout << "Please enter the file name of the image containing your animation: ";
 
-	// Take the input and store the filename
 	getline(std::cin, fileName);
 
 	//////////////////////////////////////////////////////////////////////////
@@ -85,108 +77,83 @@ int main(int argc, char **argv)
 	glLoadIdentity();
 	//////////////////////////////////////////////////////////////////////////
 
-	// WHILE the texture is null
+	// WHILE the texture hasn't loaded successfully
 	while(!texture->loadTexture(fileName))
 	{
-		// Prompt for a new image
 		std::cout << "Enter the name of the image to try: ";
 
-		// Take the input and store the filename
 		getline(std::cin, fileName);
 	}
-	// ENDWHILE
 
 	animation.setTexture(texture);
 
 	running = true;
 
-	// WHILE the user isn't done with the program
 	while(running)
 	{
-		// Display the menu (displayMenu())
 		displayMenu();
 
-		// Store the letter
 		std::cin >> command;
 
-		// SWITCH based on letter chosen
 		switch(command)
 		{
-			// CASE Add frames ('A')
 			case 'A':
-				// CALL addFrame(animation)
-				addFrame(animation);
+				addFrame();
 				break;
-				// ENDCASE
 
 			case 'D':
-				deleteFrame(animation);
+				deleteFrame();
 				break;
 
 			case 'X':
-				clearFrames(animation);
+				clearFrames();
+				break;
 
-			// CASE Change frame dimensions ('C')
 			case 'C':
-				// CALL setDimensions(animation)
-				setDimensions(animation);
+				setDimensions();
 				break;
-			// ENDCASE
 
-			// CASE change delay ('D')
 			case 'R':
-				// CALL setDelay(animation)
-				setDelay(animation);
+				setDelay();
 				break;
-			// ENDCASE
 
-			// CASE new texture ('T')
 			case 'T':
-				// CALL resetTexture(animation)
-				resetTexture(animation);
+				resetTexture();
 				break;
-			// ENDCASE
 
-			// CASE play the animation ('P')
 			case 'P':
-				// CALL playAnimation(animation)
-				playAnimation(animation);
+				playAnimation();
 				break;
-			// ENDCASE
 
-			// CASE view a frame ('V')
+			case 'Y':
+				printFrames();
+				break;
+
 			case 'V':
-				// CALL viewFrame(animation)
-				viewFrame(animation);
+				viewFrame();
 				break;
-			// ENDCASE
 
-			// CASE stop the program ('Q')
 			case 'Q':
-				// Delete GL context
 				SDL_GL_DeleteContext(glContext);
 
-				// Destroy Window
 				SDL_DestroyWindow(window);
 
-				// Set running to false
 				running = false;
 				break;
-			// ENDCASE
 
 			default:
 				break;
 		}
-		// ENDSWITCH
 	}
-	// ENDWHILE
+	
+	texture->deleteMe();
+	animation.deleteMe();
 
 	return 0;
 }
 
 void displayMenu()
 {
-	// Display the menu options...
 	std::cout  
 		<< "Menu:\n" 
 		<< "A - add frame(s)\n"
@@ -196,6 +163,7 @@ void displayMenu()
 		<< "R - set the delay of a frame\n"
 		<< "T - change the animation image\n"
 		<< "P - play the entire animation\n"
+		<< "Y - print all frames\n"
 		<< "V - view a single frame\n"
 		<< "Q - quit the program\n";
 
@@ -204,37 +172,30 @@ void displayMenu()
 	std::cout << "Command: ";
 }
 
-void addFrame(TGA::Animation& animation)
+void addFrame()
 {
 	bool adding = true;
 	Uint32 delay;
 	SDL_Rect frameRect;
 	char keepGoing;
 
-	// WHILE the user still wants to enter frames
 	while(adding)
 	{
-		// Prompt the user for the next frame dimensions, delay in ms (one per line)
-		std::cout << "Enter the top-left x point (0 if image is laid out vertically): ";
+		std::cout << "Enter the left-most x point (0 if image is laid out vertically): ";
 		std::cin >> frameRect.x;
 
-		// Store yPos
-		std::cout << "Enter the top-left y point (0 if image is laid out horizontally): ";
+		std::cout << "Enter the top-most y point (0 if image is laid out horizontally): ";
 		std::cin >> frameRect.y;
 
-		// Store the width
 		std::cout << "Enter the width: ";
 		std::cin >> frameRect.w;
 
-		// Store the height
 		std::cout << "Enter the height: ";
 		std::cin >> frameRect.h;
 
-		// Store the delay
 		std::cout << "Enter the delay (in milliseconds): ";
 		std::cin >> delay;
 
-		// Add this frame to the Animation
 		animation.addFrame(frameRect, delay * 1000);
 
 		std::cout << "Frame added.\n";
@@ -247,19 +208,16 @@ void addFrame(TGA::Animation& animation)
 			adding = false;
 		}
 	}
-	// ENDWHILE
 }
 
-void deleteFrame(TGA::Animation& animation)
+void deleteFrame()
 {
 	bool deleting = true;
 	GLuint frameNum;
 	char keepGoing;
 
-	// WHILE the user still wants to enter frames
 	while(deleting)
 	{
-		// Prompt the user for the next frame dimensions, delay in ms (one per line)
 		std::cout << "Enter frame number to delete: ";
 		std::cin >> frameNum;
 
@@ -275,127 +233,114 @@ void deleteFrame(TGA::Animation& animation)
 			deleting = false;
 		}
 	}
-	// ENDWHILE
 }
 
-void clearFrames(TGA::Animation& animation)
+void clearFrames()
 {
 	animation.clearFrames();
-	std::cout << "All frames removed.";
+	std::cout << "All frames removed.\n";
 }
 
 
-void viewFrame(TGA::Animation& animation)
+void viewFrame()
 {
 	GLuint frame;
 
-	// Prompt the user for the frame number
 	std::cout << "Enter the frame number: ";
 
-	// Set the current frame
 	std::cin >> frame;
 	animation.goToFrame(frame);
 
-	// Draw the Animation
-	animation.draw(SCREEN_WIDTH / 2 - texture->getWidth(), SCREEN_HEIGHT / 2 - texture->getHeight());
+	animation.draw((GLfloat)SCREEN_WIDTH / 2 - texture->getWidth(), (GLfloat)SCREEN_HEIGHT / 2 - texture->getHeight());
 
-	// Swap buffers
 	SDL_GL_SwapWindow(window);	
 }
 
-void playAnimation(TGA::Animation& animation)
+void playAnimation()
 {
-	// Prompt the user for the number of times to play the animation
 	std::cout << "Enter the number of times to play the entire animation: ";
 
-	// Set the animations repetitions
 	int repetitions;
 	std::cin >> repetitions;
 	animation.setRepetitions(repetitions);
 
 	animation.reset();
 
-	// WHILE the animation is not done
 	while(!animation.isDone())
 	{
-		// Update it
 		animation.update();
 
-		// Draw it
-		animation.draw(SCREEN_WIDTH / 2 - texture->getWidth(), SCREEN_HEIGHT / 2 - texture->getHeight());
+		animation.draw((GLfloat)SCREEN_WIDTH / 2 - texture->getWidth(), (GLfloat)SCREEN_HEIGHT / 2 - texture->getHeight());
 
-		// Swap buffers
 		SDL_GL_SwapWindow(window);
 	}
-	// ENDWHILE
+
+	std::cout << "Hope you liked it!\n";
 }
 
-void resetTexture(TGA::Animation& animation)
+void resetTexture()
 {
-	// Prompt user for new filename
 	std::cout << "Enter a new file name for the animation image: ";
 
-	// Store filename
 	std::string fileName;
 	getline(std::cin, fileName);
 		
-	// WHILE the texture is null
+	// WHILE the texture hasn't loaded correctly
 	while(!(texture->loadTexture(fileName)))
 	{
-		// Prompt for a new image
 		std::cout << "Enter the name of the image to try: ";
 
-		// Take the input and store the filename
 		getline(std::cin, fileName);
 	}
-	// ENDWHILE
 
 	animation.setTexture(texture);
 	animation.clearFrames();
+
+	std::cout << "Texture reset and all frames removed.\n";
 }
 
-void setDimensions(TGA::Animation& animation)
+void setDimensions()
 {
 	SDL_Rect newRect;
 
-	// Prompt the user for the frame number and dimensions (one per line)
-	std::cout << "Enter the frame number followed by the new dimensions (x, y, width, height): ";
+	std::cout << "Enter the frame number: ";
 
-	// Store the frame number
 	GLuint frame;
 	std::cin >> frame;
 
-	// Store the xPos
+	std::cout << "Enter the new left-most x position: ";
 	std::cin >> newRect.x;
 
-	// Store yPos
+	std::cout << "Enter the new top-most y position: ";
 	std::cin >> newRect.y;
 
-	// Store the width
+	std::cout << "Enter the new width: ";
 	std::cin >> newRect.w;
-
-	// Store the height
+	
+	std::cout << "Enter the new height: ";
 	std::cin >> newRect.h;
 
-	// Set the new frame bounds
 	animation.setFrameBounds(frame, newRect);
+	std::cout << "New dimensions set.\n";
 }
 
-void setDelay(TGA::Animation& animation)
+void setDelay()
 {
 	Uint32 delay;
 
-	// Prompt user for frame number and delay
-	std::cout << "Enter the frame number new delay (in milliseconds): ";
+	std::cout << "Enter the frame number: ";
 	
-	// Store frame number
 	GLuint frame;
 	std::cin >> frame;
 
-	// Store delay
+	std::cout << "Enter the new delay (in milliseconds): ";
 	std::cin >> delay;
 
-	// Set new frame delay
 	animation.setDelay(frame, delay * 1000);
+	std::cout << "Delay for frame " << frame << " set.\n";
 }
 
+void printFrames()
+{
+	std::cout << animation.printFrames();
+}

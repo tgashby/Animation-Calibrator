@@ -14,72 +14,56 @@ namespace TGA
 
 	Texture::Texture(std::string imgFileName)
 	{
-		// CALL loadTexture(filename)
 		loadTexture(imgFileName);
 	}
 
 	Texture::~Texture()
 	{
-		// CALL deleteMe()
-		deleteMe();
 	}
 
 	bool Texture::loadTexture(std::string imgFileName)
 	{
-		// Create an SDL_Surface with a call to IMG_Load and the fileName
 		SDL_Surface* image = IMG_Load(imgFileName.c_str());
 
-		// IF the surface is NULL
 		if(image == NULL)
 		{
-			// Print an error message and stop
 			std::cout << "Error:" << SDL_GetError() << std::endl;
 			return false;
 		}
 
-		// CALL SDL_DisplayFormatAlpha(image)
+		// Format the image to be more usable with OGL
 		SDL_DisplayFormatAlpha(image);
 
-		// Set this texture's fileName to the fileName
 		fileName = imgFileName;
 
-		// Set the width and height to the appropriate surface values
-		width = (GLfloat)image->w;
-		height = (GLfloat)image->h;
+		width = image->w;
+		height = image->h;
 
-		// Generate the texture (glGenTextures)
 		glGenTextures(1, &texture);
 
-		// Bind the texture
 		glBindTexture(GL_TEXTURE_2D, texture);
 
-		// Set up glTexParameter(s)
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-		// CALL glTexImage2D
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-		// Free the surface
 		SDL_FreeSurface(image);
 
-		// Add this texture to the TextureManager
 		Singleton<TextureManager>::GetSingletonPtr()->addTexture(this);
 		return true;
 	}
 
 	void Texture::deleteMe()
 	{
-		// Remove this texture from the TextureManager
 		Singleton<TextureManager>::GetSingletonPtr()->removeTexture(this);
 	}
 
 	void Texture::reset()
 	{
-		// CALL loadTexture(fileName)
 		loadTexture(fileName);
 	}
 
@@ -87,39 +71,33 @@ namespace TGA
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// Push the current matrix (glPushMatrix)
 		glPushMatrix();
 
 		glEnable(GL_TEXTURE_2D);
 
-		// Bind the texture (glBindTexture)
 		glBindTexture(GL_TEXTURE_2D, texture);
 
-		// Begin drawing
 		glBegin(GL_QUADS);
 
-			// Assign the texture coords for each corner and the vertexes (4 blocks of 2 lines of glTexCoord, glVertex)
-			glTexCoord2d(0, 0);
+			glTexCoord2f(0.0f, 0.0f);
 			glVertex2f(xPos, yPos);
 
-			glTexCoord2d(1, 0);
+			glTexCoord2f(1.0f, 0.0f);
 			glVertex2f(xPos + width, yPos);
 
-			glTexCoord2d(1, 1);
+			glTexCoord2f(1.0f, 1.0f);
 			glVertex2f(xPos + width, yPos + height);
 			
-			glTexCoord2d(0, 1);
+			glTexCoord2f(0.0f, 1.0f);
 			glVertex2f(xPos, yPos + height);
-		// End drawing
+
 		glEnd();
 
-		// Pop the current matrix (glPopMatrix)
 		glPopMatrix();
 	}
 
 	void Texture::drawSection(GLfloat xPos, GLfloat yPos, SDL_Rect section)
 	{
-		// CALL drawSection(xPos, yPos, section->x, section->y, section->w, section->h)
 		drawSection(xPos, yPos, section.x, section.y, section.w, section.h);
 	}
 
@@ -127,50 +105,44 @@ namespace TGA
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// Push the current matrix (glPushMatrix)
+		glMatrixMode(GL_TEXTURE);
+		
+		glLoadIdentity();
+		
+		glScalef(1/(GLfloat)width, 1/(GLfloat)height, 1);
+
 		glPushMatrix();
 
 		glEnable(GL_TEXTURE_2D);
 
-		// Bind the texture (glBindTexture)
 		glBindTexture(GL_TEXTURE_2D, texture);
 
-		glMatrixMode(GL_TEXTURE);
-		glLoadIdentity();
-		glScalef(1/width, 1/height, 1);
-
-		// Begin drawing
 		glBegin(GL_QUADS);
 
-			// Assign the texture coords for each corner and the vertexes (4 blocks of 2 lines of glTexCoord, glVertex)
-			glTexCoord2d(sectX, sectY);
+			glTexCoord2f((GLfloat)sectX, (GLfloat)sectY);
 			glVertex2f(xPos, yPos);
 
-			glTexCoord2d(sectWidth, sectY);
+			glTexCoord2f((GLfloat)sectWidth, (GLfloat)sectY);
 			glVertex2f(xPos + width, yPos);
 
-			glTexCoord2d(sectWidth, sectHeight);
+			glTexCoord2f((GLfloat)sectWidth, (GLfloat)sectHeight);
 			glVertex2f(xPos + width, yPos + height);
 
-			glTexCoord2d(sectX, sectHeight);
+			glTexCoord2f((GLfloat)sectX, (GLfloat)sectHeight);
 			glVertex2f(xPos, yPos + height);
 
-		// End drawing
 		glEnd();
 
-		// Pop the current matrix (glPopMatrix)
 		glPopMatrix();
 	}
 
-	GLfloat Texture::getWidth()
+	GLsizei Texture::getWidth()
 	{
-		// Return the width
 		return width;
 	}
 
-	GLfloat Texture::getHeight()
+	GLsizei Texture::getHeight()
 	{
-		// Return the height
 		return height;
 	}
 }

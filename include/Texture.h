@@ -10,7 +10,6 @@ namespace TGA
 		friend class TextureManager;
 
 	public:
-		// Constructors/Destructor
 		Texture();
 		Texture(std::string fileName);
 		~Texture();
@@ -34,14 +33,14 @@ namespace TGA
 		void drawSection(GLfloat xPos, GLfloat yPos, int sectX, int sectY,
 			int sectWidth, int sectHeight);
 
-		GLfloat getWidth();
+		GLsizei getWidth();
 
-		GLfloat getHeight();
+		GLsizei getHeight();
 
 	private:
 		GLuint texture;
 		std::string fileName;
-		GLfloat width;
-		GLfloat height;
+		GLsizei width;
+		GLsizei height;
 	};
 }
