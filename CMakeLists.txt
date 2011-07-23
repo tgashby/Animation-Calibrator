@@ -89,14 +89,20 @@ if (APPLE)
    )
 endif()
 
+if(APPLE)
+    set(BUNDLE_BINARY
+        ${CMAKE_CURRENT_BINARY_DIR}/Animation-Calibrator.app/Contents/MacOS/Animation-Calibrator)
+    add_custom_command(TARGET Animation-Calibrator POST_BUILD
+        COMMAND python scripts/frameworkify.py ${BUNDLE_BINARY}
+        ${SDL_LIBRARY})
+endif()
+
 # Include the Includes
 include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/include
    ${SDL_FOLDER}/include
    ${SDL_IMG_FOLDER}/include
 )
-
-set(LINK_FLAGS "${LINK_FLAGS} -mwindows -mconsole")
 
 # Get everything together for the executable
 add_executable(
