@@ -83,7 +83,5 @@ namespace TGA
 				animations.erase(animations.end() - 1);
 			}
 		}
-
-		delete animation;
 	}
 }
