@@ -123,13 +123,13 @@ namespace TGA
 			glVertex2f(xPos, yPos);
 
 			glTexCoord2f((GLfloat)sectWidth, (GLfloat)sectY);
-			glVertex2f(xPos + width, yPos);
+			glVertex2f(xPos + sectWidth, yPos);
 
 			glTexCoord2f((GLfloat)sectWidth, (GLfloat)sectHeight);
-			glVertex2f(xPos + width, yPos + height);
+			glVertex2f(xPos + sectWidth, yPos + sectHeight);
 
 			glTexCoord2f((GLfloat)sectX, (GLfloat)sectHeight);
-			glVertex2f(xPos, yPos + height);
+			glVertex2f(xPos, yPos + sectHeight);
 
 		glEnd();
 

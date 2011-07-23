@@ -108,7 +108,10 @@ namespace TGA
 
 	void Animation::deleteFrame(GLuint frameNum)
 	{
-		frames.erase(frames.begin() + frameNum);
+		if(frameNum < frames.size())
+		{
+			frames.erase(frames.begin() + frameNum);
+		}
 	}
 
 	void Animation::clearFrames()

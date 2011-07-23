@@ -89,10 +89,11 @@ int main(int argc, char **argv)
 
 	running = true;
 
+	displayMenu();
+
 	while(running)
 	{
-		displayMenu();
-
+		std::cout << "Command: ";
 		std::cin >> command;
 
 		switch(command)
@@ -133,6 +134,10 @@ int main(int argc, char **argv)
 				viewFrame();
 				break;
 
+			case 'M':
+				displayMenu();
+				break;
+
 			case 'Q':
 				SDL_GL_DeleteContext(glContext);
 
@@ -165,11 +170,10 @@ void displayMenu()
 		<< "P - play the entire animation\n"
 		<< "Y - print all frames\n"
 		<< "V - view a single frame\n"
+		<< "M - display this menu\n"
 		<< "Q - quit the program\n";
 
 	std::cout << "SDL ERROR: " << SDL_GetError() << std::endl;
-
-	std::cout << "Command: ";
 }
 
 void addFrame()
