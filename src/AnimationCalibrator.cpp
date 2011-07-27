@@ -2,6 +2,7 @@
 #include "../include/AnimationManager.h"
 #include "../include/InputManager.h"
 #include "../include/ProjIncludes.h"
+#include <SDL_thread.h>
 
 void displayMenu();
 void addFrame();
@@ -23,7 +24,7 @@ TGA::Animation animation;
 int SCREEN_WIDTH = 1024;
 int SCREEN_HEIGHT = 512;
 
-// Bring "running" out to here
+bool running;
 
 int main(int argc, char **argv)
 {
@@ -33,9 +34,8 @@ int main(int argc, char **argv)
 
 	char command;
 
-	bool running;
-
 	// Create a SDL_Thread*
+	SDL_Thread* animThread;
 
 	std::cout << "Animation Calibrator:\n" << "A program to run through animations and tweak frame delays and settings.\n\n"
 		<< "Please have your animation in a single file with frames laid out however you want.\n"; 
@@ -97,6 +97,7 @@ int main(int argc, char **argv)
 	running = true;
 
 	// Start the handleAnimation thread! (YAY!)
+	animThread = SDL_CreateThread(handleAnimation, "Anim Thread");
 
 	displayMenu();
 
@@ -161,6 +162,7 @@ int main(int argc, char **argv)
 	}
 
 	// Wait for the thread to finish
+	SDL_WaitThread(animThread, NULL);
 	
 	texture->deleteMe();
 	animation.deleteMe();
@@ -265,16 +267,12 @@ void viewFrame()
 	std::cin >> frame;
 
 	// Reset the animation
+	animation.reset();
 
 	animation.goToFrame(frame);
 
-	// DELETE ME!
-	animation.draw((GLfloat)SCREEN_WIDTH / 2 - texture->getWidth(), (GLfloat)SCREEN_HEIGHT / 2 - texture->getHeight());
-
-	SDL_GL_SwapWindow(window);	
-	// TO HERE!
-
 	// Set repetitions to 0
+	animation.setRepetitions(0);
 }
 
 void playAnimation()
@@ -287,19 +285,7 @@ void playAnimation()
 
 	animation.reset();
 
-	// DELETE ME
-	while(!animation.isDone())
-	{
-		animation.update();
-
-		animation.draw((GLfloat)SCREEN_WIDTH / 2 - texture->getWidth(), (GLfloat)SCREEN_HEIGHT / 2 - texture->getHeight());
-
-		SDL_GL_SwapWindow(window);
-	}
-	// TO HERE!
-
-	// Change to "like"
-	std::cout << "Hope you liked it!\n";
+	std::cout << "Hope you like it!\n";
 }
 
 void resetTexture()
@@ -372,14 +358,17 @@ void printFrames()
 int handleAnimation(void* unused)
 {
 	// WHILE the program is still running
-
+	while(running)
+	{
 		// Update the animation
+		animation.update();
 
 		// Draw the animation
+		animation.draw(SCREEN_WIDTH / 2 - texture->getWidth() / 2, 
+		 SCREEN_HEIGHT / 2 - texture->getHeight() /2);
 
-		// SDL_GL_SwapWindow(window)
+		SDL_GL_SwapWindow(window);
+	}
 
-	// ENDWHILE
-
-	// RETURN
+	return 0;
 }

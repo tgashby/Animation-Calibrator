@@ -160,7 +160,7 @@ namespace TGA
 	void Animation::draw(GLfloat xPos, GLfloat yPos)
 	{
 		// IF the texture exists
-		if(texture != NULL)
+		if(texture != NULL && frames.size() > 0)
 		{
 			SDL_Rect tempRect = frames.at(currFrame).first;
 
