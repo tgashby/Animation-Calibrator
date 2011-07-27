@@ -14,11 +14,16 @@ void setDimensions();
 void setDelay();
 void printFrames();
 
+// Thread function
+int handleAnimation(void*);
+
 SDL_Window* window;
 TGA::Texture* texture;
 TGA::Animation animation;
 int SCREEN_WIDTH = 1024;
 int SCREEN_HEIGHT = 512;
+
+// Bring "running" out to here
 
 int main(int argc, char **argv)
 {
@@ -30,6 +35,8 @@ int main(int argc, char **argv)
 
 	bool running;
 
+	// Create a SDL_Thread*
+
 	std::cout << "Animation Calibrator:\n" << "A program to run through animations and tweak frame delays and settings.\n\n"
 		<< "Please have your animation in a single file with frames laid out however you want.\n"; 
 
@@ -38,7 +45,7 @@ int main(int argc, char **argv)
 	getline(std::cin, fileName);
 
 	//////////////////////////////////////////////////////////////////////////
-	// Initialize the SDL window (1024x512) and GL context and all that stuff
+	// Initialize the SDL window and GL context and all that stuff
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
 
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
@@ -88,6 +95,8 @@ int main(int argc, char **argv)
 	animation.setTexture(texture);
 
 	running = true;
+
+	// Start the handleAnimation thread! (YAY!)
 
 	displayMenu();
 
@@ -150,6 +159,8 @@ int main(int argc, char **argv)
 				break;
 		}
 	}
+
+	// Wait for the thread to finish
 	
 	texture->deleteMe();
 	animation.deleteMe();
@@ -245,7 +256,6 @@ void clearFrames()
 	std::cout << "All frames removed.\n";
 }
 
-
 void viewFrame()
 {
 	GLuint frame;
@@ -253,11 +263,18 @@ void viewFrame()
 	std::cout << "Enter the frame number: ";
 
 	std::cin >> frame;
+
+	// Reset the animation
+
 	animation.goToFrame(frame);
 
+	// DELETE ME!
 	animation.draw((GLfloat)SCREEN_WIDTH / 2 - texture->getWidth(), (GLfloat)SCREEN_HEIGHT / 2 - texture->getHeight());
 
 	SDL_GL_SwapWindow(window);	
+	// TO HERE!
+
+	// Set repetitions to 0
 }
 
 void playAnimation()
@@ -270,6 +287,7 @@ void playAnimation()
 
 	animation.reset();
 
+	// DELETE ME
 	while(!animation.isDone())
 	{
 		animation.update();
@@ -278,7 +296,9 @@ void playAnimation()
 
 		SDL_GL_SwapWindow(window);
 	}
+	// TO HERE!
 
+	// Change to "like"
 	std::cout << "Hope you liked it!\n";
 }
 
@@ -347,4 +367,19 @@ void setDelay()
 void printFrames()
 {
 	std::cout << animation.printFrames();
+}
+
+int handleAnimation(void* unused)
+{
+	// WHILE the program is still running
+
+		// Update the animation
+
+		// Draw the animation
+
+		// SDL_GL_SwapWindow(window)
+
+	// ENDWHILE
+
+	// RETURN
 }
