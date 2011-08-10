@@ -1,32 +1,19 @@
 # CMake Build File for Animation-Calibrator
 # author: Tag Ashby <tgashby@calpoly.edu>
 
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
 
 project(Animation-Calibrator)
 
 # Sources
 set(
    SOURCES
-   src/Animation.cpp
    src/AnimationCalibrator.cpp
-   src/AnimationManager.cpp
-   src/InputManager.cpp
-   src/Texture.cpp
-   src/TextureManager.cpp
 )
 
 # Includes
 set(
    INCLUDES
-   include/Animation.h
-   include/AnimationManager.h
-   include/InputManager.h
-   include/Key.h
-   include/ProjIncludes.h
-   include/Texture.h
-   include/TextureManager.h
-   include/Singleton.h
 )
 
 # Non-System Libraries
@@ -54,19 +41,17 @@ find_library(
    NO_DEFAULT_PATH
 )
 
-# SDL Image
-set(
-   SDL_IMG_FOLDER
-   ${CMAKE_CURRENT_SOURCE_DIR}/lib/SDL_image
-   CACHE STRING "Path to SDL_image 1.2" FORCE
+find_library(
+	TGA_ENGINE_LIBRARY
+	NAMES TGAEngine
+	PATHS ${CMAKE_CURRENT_SOURCE_DIR}/lib
 )
 
-find_library(
-   SDL_IMG_LIBRARY
-   NAMES SDL_image
-   PATHS ${SDL_IMG_FOLDER}
-   PATH_SUFFIXES lib
-   NO_DEFAULT_PATH
+# SDL_Image
+set(
+   SDL_IMG_FOLDER
+   ${SDL_IMG_FOLDER} ${CMAKE_CURRENT_SOURCE_DIR}/lib/SDL_image
+   CACHE STRING "Path to SDL_image 1.2" FORCE
 )
 
 # System Libraries
@@ -76,32 +61,39 @@ find_package(
    OpenGL REQUIRED
 )
 
-# Deal with silly Mac things
+# Deal with Platform Specific things
 set(
    EXTRA_LIBS
    ""
 )
 
 if (APPLE)
-   set(
-      EXTRA_LIBS 
-      ${EXTRA_LIBS} "-framework Cocoa"
+   FIND_LIBRARY(COCOA_LIBRARY Cocoa)
+   FIND_LIBRARY(SDL_IMG_LIBRARY SDL_image)
+   MARK_AS_ADVANCED (
+		COCOA_LIBRARY
+		SDL_IMG_LIBRARY
    )
+   SET(EXTRA_LIBS ${COCOA_LIBRARY} ${SDL_IMG_LIBRARY})
 endif()
 
-if(APPLE)
-    set(BUNDLE_BINARY
-        ${CMAKE_CURRENT_BINARY_DIR}/Animation-Calibrator.app/Contents/MacOS/Animation-Calibrator)
-    add_custom_command(TARGET Animation-Calibrator POST_BUILD
-        COMMAND python scripts/frameworkify.py ${BUNDLE_BINARY}
-        ${SDL_LIBRARY})
+if(WIN32)	
+	find_library(
+	   SDL_IMG_LIBRARY
+	   NAMES SDL_image
+	   PATHS ${SDL_IMG_FOLDER}
+	   PATH_SUFFIXES lib
+	   NO_DEFAULT_PATH
+	)
 endif()
 
 # Include the Includes
 include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/include
+   ${CMAKE_CURRENT_SOURCE_DIR}/TGAEngine/include
    ${SDL_FOLDER}/include
    ${SDL_IMG_FOLDER}/include
+   
 )
 
 # Get everything together for the executable
@@ -120,5 +112,6 @@ target_link_libraries(
    ${SDL_LIBRARY}
    ${SDLMAIN_LIBRARY}
    ${SDL_IMG_LIBRARY}
+   ${TGA_ENGINE_LIBRARY}
    ${EXTRA_LIBS}
 )
