@@ -182,7 +182,7 @@ void displayMenu()
 		<< "M - display this menu\n"
 		<< "Q - quit the program\n";
 
-	std::cout << "SDL ERROR: " << SDL_GetError() << std::endl;
+	// std::cout << "SDL ERROR: " << SDL_GetError() << std::endl;
 }
 
 void addFrame()
