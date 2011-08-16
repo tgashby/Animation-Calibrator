@@ -76,7 +76,7 @@ find_library(
 find_library(
 	TGA_ENGINE_LIBRARY
 	NAMES TGAEngine
-	PATHS ${LIB_FOLDER}
+	PATHS ${LIB_FOLDER}/TGAEngine
 	PATH_SUFFIXES Apple Win32
 	NO_DEFAULT_PATH
 )
