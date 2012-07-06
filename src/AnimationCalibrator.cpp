@@ -163,7 +163,7 @@ int main(int argc, char **argv)
 	texture->deleteMe();
 	animation.deleteMe();
 
-	return 0;
+   exit(0);
 }
 
 void displayMenu()
