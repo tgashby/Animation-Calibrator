@@ -1,3 +1,11 @@
+/**
+ * @file AnimationManager.h
+ *
+ * @author Tag Ashby
+ * @date 7/2012
+ * 
+ */
+
 #pragma once
 
 #include "ProjIncludes.h"
@@ -5,27 +13,68 @@
 
 namespace TGA
 {
+   /**
+    * @class AnimationManager
+    *
+    * @brief Manages all Animations. Animations are automatically added
+    * to the manager upon creation.
+    *
+    * AnimationManager is one of the Singleton Managers
+    */
 	class AnimationManager
 	{
 		friend class Animation;
 
 	public:
+		/**
+		* AnimationManager
+		*
+		* Constructor, clears animations.
+		*/
 		AnimationManager();
-		~AnimationManager();
+		
+      /**
+      * ~AnimationManager
+      *
+      * Removes all animations and deallocates them.
+      * Calls removeAll()
+      */
+      ~AnimationManager();
 
-		// Remove all animations
+		
+		/**
+		* removeAll
+		*
+		* Removes every animation from the list and deallocates them.
+		*/
 		void removeAll();
-				
-		// Pause all animations
+						
+		/**
+		* pauseAll
+		*
+		* Pauses (Animation.pause()) every animation in the list.
+		*/
 		void pauseAll();
 
-		// Resume all animations
+		/**
+		* resumeAll
+		*
+		* Resumes (Animation.resume()) every animation in the list.
+		*/
 		void resumeAll();
 		
-		// Update all animations
+		/**
+		* updateAll
+		*
+		* Updates (Animation.update()) all animations in the list.
+		*/
 		void updateAll();
 
-		// Reset all animations
+		/**
+		* resetAll
+		*
+		* Resets (Animation.reset()) all animations in the list
+		*/
 		void resetAll();
 
 	protected:

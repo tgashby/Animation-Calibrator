@@ -1,3 +1,12 @@
+/**
+ * @file ProjIncludes.h
+ *
+ * @author Tag Ashby
+ * @date 7/2012
+ *
+ * Collecting most of the important includes in one file.
+ */
+
 #pragma once
 
 #include "Singleton.h"

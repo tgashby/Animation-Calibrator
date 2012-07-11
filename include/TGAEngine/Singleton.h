@@ -10,12 +10,26 @@
 #ifndef SINGLETON
 #define SINGLETON
 
+#define NULL 0
+
 namespace TGA
 {
+   /**
+    * @class Singleton
+    *
+    * @brief Handles Singleton instances of classes.
+    *
+    * This is the Singleton template used to maintain Singletons.
+    */
    template<class T> class Singleton
    {
    public:
-      /// Get a pointer to the singleton
+      /**
+      * GetSingletonPtr
+      *
+      * Gets the one and only Singleton pointer to the class.
+      * @return T* - the single pointer to the class specified.
+      */
       static T* GetSingletonPtr()
       {
          if (!m_Instance)

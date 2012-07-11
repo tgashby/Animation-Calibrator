@@ -1,0 +1,50 @@
+Frame: 0
+X: 0  Y: 0
+Width: 172  Height: 214
+Delay: 100000
+
+Frame: 1
+X: 172  Y: 0
+Width: 160  Height: 214
+Delay: 100000
+
+Frame: 2
+X: 332  Y: 0
+Width: 128  Height: 214
+Delay: 100000
+
+Frame: 3
+X: 460  Y: 0
+Width: 130  Height: 214
+Delay: 100000
+
+Frame: 4
+X: 595  Y: 0
+Width: 150  Height: 214
+Delay: 100000
+
+Frame: 5
+X: 745  Y: 0
+Width: 180  Height: 214
+Delay: 100000
+
+Frame: 6
+X: 925  Y: 0
+Width: 150  Height: 214
+Delay: 100000
+
+Frame: 7
+X: 1075  Y: 0
+Width: 135  Height: 214
+Delay: 100000
+
+Frame: 8
+X: 1210  Y: 0
+Width: 145  Height: 214
+Delay: 100000
+
+Frame: 9
+X: 1355  Y: 0
+Width: 133  Height: 214
+Delay: 100000
+

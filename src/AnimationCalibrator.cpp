@@ -7,9 +7,11 @@
 #include <map>
 #include <string>
 #include <iostream>
+#include <fstream>
 #include <sstream>
 #include <Texture.h>
 #include <Animation.h>
+#include <GraphicsManager.h>
 
 
 void displayMenu();
@@ -22,16 +24,24 @@ void resetTexture();
 void setDimensions();
 void setDelay();
 void printFrames();
+bool acceptableInput(char toTest, std::string inputs);
+template <typename T> T getValidatedInput();
+void saveFrames();
+void loadFrames();
+void changeFPS();
 
-SDL_Window* window;
+//SDL_Window* window;
+TGA::GraphicsManager* graphicsMan;
 TGA::Texture* texture;
 TGA::Animation animation;
 int SCREEN_WIDTH = 1024;
 int SCREEN_HEIGHT = 512;
+int fps = 0;
 
 int main(int argc, char **argv)
 {
 	texture = new TGA::Texture();
+   graphicsMan = new TGA::GraphicsManager();
 
 	std::string fileName;
 
@@ -46,45 +56,8 @@ int main(int argc, char **argv)
 
 	getline(std::cin, fileName);
 
-	//////////////////////////////////////////////////////////////////////////
-	// Initialize the SDL window (1024x512) and GL context and all that stuff
-	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
-
-	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
-	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-
-	window = SDL_CreateWindow("Animation-Calibrator", SDL_WINDOWPOS_CENTERED, 
-		SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
-
-	SDL_GLContext glContext = SDL_GL_CreateContext(window);
-	//////////////////////////////////////////////////////////////////////////
-
-	//////////////////////////////////////////////////////////////////////////
-	// Initialize all the OGL stuff
-	glMatrixMode(GL_PROJECTION);
-
-	glLoadIdentity();
-
-	glOrtho(0.0, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0, 0.0, 1000.0);
-
-	glDisable(GL_DEPTH_TEST);
-
-	glClearColor(1, 1, 1, 1);
-
-	glShadeModel(GL_SMOOTH);
-
-	glMatrixMode(GL_MODELVIEW);
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	glLoadIdentity();
-	//////////////////////////////////////////////////////////////////////////
+   // Initialize the window to render into.
+   graphicsMan->init(SCREEN_WIDTH, SCREEN_HEIGHT, "Animation Calibrator", 20, 30);
 
 	// WHILE the texture hasn't loaded successfully
 	while(!texture->loadTexture(fileName))
@@ -100,58 +73,83 @@ int main(int argc, char **argv)
 
 	displayMenu();
 
+   std::cout << "At what rate should the animation run? (fps): ";
+   fps = getValidatedInput<int>();
+
 	while(running)
 	{
 		std::cout << "Command: ";
-		std::cin >> command;
+		command = getValidatedInput<char>();
 
 		switch(command)
 		{
 			case 'A':
+         case 'a':
 				addFrame();
 				break;
 
 			case 'D':
+         case 'd':
 				deleteFrame();
 				break;
 
 			case 'X':
+         case 'x':
 				clearFrames();
 				break;
 
 			case 'C':
+         case 'c':
 				setDimensions();
 				break;
 
-			case 'R':
-				setDelay();
-				break;
+			//case 'R':
+   //      case 'r':
+			//	setDelay();
+			//	break;
 
 			case 'T':
+         case 't':
 				resetTexture();
 				break;
 
 			case 'P':
+         case 'p':
 				playAnimation();
 				break;
 
 			case 'Y':
+         case 'y':
 				printFrames();
 				break;
 
 			case 'V':
+         case 'v':
 				viewFrame();
 				break;
 
 			case 'M':
+         case 'm':
 				displayMenu();
 				break;
 
+         case 'S':
+         case 's':
+            saveFrames();
+            break;
+
+         case 'L':
+         case 'l':
+            loadFrames();
+            break;
+            
+         case 'F':
+         case 'f':
+            changeFPS();
+            break;
+
 			case 'Q':
-				SDL_GL_DeleteContext(glContext);
-
-				SDL_DestroyWindow(window);
-
+         case 'q':
 				running = false;
 				break;
 
@@ -159,9 +157,19 @@ int main(int argc, char **argv)
 				break;
 		}
 	}
+
+   std::cout << "Do you want to save your frames?(Y/N) ";
+   std::cin >> command;
+
+   if (std::string("Y y").find_first_of(command) != std::string::npos)
+   {
+      saveFrames();
+   }
 	
 	texture->deleteMe();
 	animation.deleteMe();
+
+   delete graphicsMan;
 
    exit(0);
 }
@@ -174,12 +182,14 @@ void displayMenu()
 		<< "D - delete frame(s)\n"
 		<< "X - clear all frames\n"
 		<< "C - change a frame's dimensions\n"
-		<< "R - set the delay of a frame\n"
+		<< "F - change the FPS of all frames\n"
 		<< "T - change the animation image\n"
 		<< "P - play the entire animation\n"
 		<< "Y - print all frames\n"
 		<< "V - view a single frame\n"
 		<< "M - display this menu\n"
+      << "S - save the current frames\n"
+      << "L - load frames from a file\n"
 		<< "Q - quit the program\n";
 
 	// std::cout << "SDL ERROR: " << SDL_GetError() << std::endl;
@@ -188,35 +198,41 @@ void displayMenu()
 void addFrame()
 {
 	bool adding = true;
-	Uint32 delay;
+	//Uint32 delay;
 	SDL_Rect frameRect;
 	char keepGoing;
 
 	while(adding)
 	{
 		std::cout << "Enter the left-most x point (0 if image is laid out vertically): ";
-		std::cin >> frameRect.x;
+      frameRect.x = getValidatedInput<int>();
 
 		std::cout << "Enter the top-most y point (0 if image is laid out horizontally): ";
-		std::cin >> frameRect.y;
+      frameRect.y = getValidatedInput<int>();
 
 		std::cout << "Enter the width: ";
-		std::cin >> frameRect.w;
+      frameRect.w = getValidatedInput<int>();
 
 		std::cout << "Enter the height: ";
-		std::cin >> frameRect.h;
+		frameRect.h = getValidatedInput<int>();
 
-		std::cout << "Enter the delay (in milliseconds): ";
-		std::cin >> delay;
+      // Removed individual delays
+		//std::cout << "Enter the delay (in milliseconds): ";
+		//std::cin >> delay;
 
-		animation.addFrame(frameRect, delay * 1000);
+		animation.addFrame(frameRect, (Uint32)(1.0 / fps * 1000));//delay * 1000);
 
 		std::cout << "Frame added.\n";
 
 		std::cout << "Keep adding frames (Y/N): ";
-		std::cin >> keepGoing;
+		keepGoing = getValidatedInput<char>();
 
-		if(keepGoing == 'N')
+      while (!acceptableInput(keepGoing, "N n Y y"))
+      {
+         keepGoing = getValidatedInput<char>();
+      }
+
+		if (std::string("N n").find_first_of(keepGoing) != std::string::npos)
 		{
 			adding = false;
 		}
@@ -232,16 +248,21 @@ void deleteFrame()
 	while(deleting)
 	{
 		std::cout << "Enter frame number to delete: ";
-		std::cin >> frameNum;
+		frameNum = getValidatedInput<int>();
 
 		animation.deleteFrame(frameNum);
 
 		std::cout << "Removed frame " << frameNum << ".\n";
 
 		std::cout << "Keep deleting frames (Y/N): ";
-		std::cin >> keepGoing;
+		keepGoing = getValidatedInput<char>();
 
-		if(keepGoing == 'N')
+      while (!acceptableInput(keepGoing, "N n Y y"))
+      {
+         keepGoing = getValidatedInput<char>();
+      }
+
+		if(std::string("N n").find_first_of(keepGoing) != std::string::npos)
 		{
 			deleting = false;
 		}
@@ -260,13 +281,13 @@ void viewFrame()
 	GLuint frame;
 
 	std::cout << "Enter the frame number: ";
+	frame = getValidatedInput<GLuint>();
 
-	std::cin >> frame;
 	animation.goToFrame(frame);
 
 	animation.draw((GLfloat)SCREEN_WIDTH / 2 - texture->getWidth(), (GLfloat)SCREEN_HEIGHT / 2 - texture->getHeight());
 
-	SDL_GL_SwapWindow(window);	
+   graphicsMan->swapBuffers();
 }
 
 void playAnimation()
@@ -274,7 +295,7 @@ void playAnimation()
 	std::cout << "Enter the number of times to play the entire animation: ";
 
 	int repetitions;
-	std::cin >> repetitions;
+	repetitions = getValidatedInput<int>();
 	animation.setRepetitions(repetitions);
 
 	animation.reset();
@@ -283,9 +304,9 @@ void playAnimation()
 	{
 		animation.update();
 
-		animation.draw((GLfloat)SCREEN_WIDTH / 2 - texture->getWidth(), (GLfloat)SCREEN_HEIGHT / 2 - texture->getHeight());
+		animation.draw((GLfloat)SCREEN_WIDTH / 2 - animation.getCurrentFrameDimensions().w / 2, (GLfloat)SCREEN_HEIGHT / 2 - animation.getCurrentFrameDimensions().h / 2);
 
-		SDL_GL_SwapWindow(window);
+		graphicsMan->swapBuffers();
 	}
 
 	std::cout << "Hope you liked it!\n";
@@ -319,19 +340,19 @@ void setDimensions()
 	std::cout << "Enter the frame number: ";
 
 	GLuint frame;
-	std::cin >> frame;
+	frame = getValidatedInput<GLuint>();
 
 	std::cout << "Enter the new left-most x position: ";
-	std::cin >> newRect.x;
+	newRect.x = getValidatedInput<int>();
 
 	std::cout << "Enter the new top-most y position: ";
-	std::cin >> newRect.y;
+	newRect.y = getValidatedInput<int>();
 
 	std::cout << "Enter the new width: ";
-	std::cin >> newRect.w;
+	newRect.w = getValidatedInput<int>();
 	
 	std::cout << "Enter the new height: ";
-	std::cin >> newRect.h;
+	newRect.h = getValidatedInput<int>();
 
 	animation.setFrameBounds(frame, newRect);
 	std::cout << "New dimensions set.\n";
@@ -344,10 +365,10 @@ void setDelay()
 	std::cout << "Enter the frame number: ";
 	
 	GLuint frame;
-	std::cin >> frame;
+	frame = getValidatedInput<GLuint>();
 
 	std::cout << "Enter the new delay (in milliseconds): ";
-	std::cin >> delay;
+	delay = getValidatedInput<Uint32>();
 
 	animation.setDelay(frame, delay * 1000);
 	std::cout << "Delay for frame " << frame << " set.\n";
@@ -356,4 +377,184 @@ void setDelay()
 void printFrames()
 {
 	std::cout << animation.printFrames();
+}
+
+bool acceptableInput(char toTest, std::string inputs)
+{
+   if (inputs.find_first_of(toTest) == std::string::npos)
+   {
+      std::cout << "'" << toTest << "'" << "is not a valid input.\n";
+      std::cout << "Valid inputs are any of the following: " << inputs << "\n";
+      std::cout << "Try again: ";
+
+      return false;
+   }
+
+   return true;
+}
+
+template <typename T> T getValidatedInput()
+{
+   bool validated = false;
+   T result;
+
+   while (!validated)
+   {
+      std::cin >> result;
+
+      // Check if the failbit has been set, meaning the beginning of the input
+      // was not type T. Also make sure the result is the only thing in the input
+      // stream, otherwise things like 2b would be a valid int.
+      if (std::cin.fail() || std::cin.get() != '\n')
+      {
+         // Set the error state flag back to goodbit. If you need to get the input
+         // again (e.g. this is in a while loop), this is essential. Otherwise, the
+         // failbit will stay set.
+         std::cin.clear();
+
+         // Clear the input stream using an empty while loop.
+         while (std::cin.get() != '\n')
+            ;
+
+         // Throw an exception. Allows the caller to handle it any way you see fit
+         // (exit, ask for input again, etc.)
+         validated = false;
+
+         std::cout << "Invalid input, please try again: ";
+      }
+      else
+      {
+         validated = true;
+      }
+   }
+
+   return result;
+}
+
+void saveFrames() 
+{
+   std::ofstream outStream;
+   std::string fileName;
+   char ch;
+   
+   while ( std::cin.get ( ch ) && ch != '\n' )
+      ;
+
+   std::cout << "What do you want to name the file? ";
+   getline(std::cin, fileName);
+
+   outStream.open(fileName.c_str(), std::ios::out);
+
+   while (!outStream.is_open())
+   {
+      std::cout << "What do you want to name the file? ";
+      getline(std::cin, fileName);
+
+      outStream.open(fileName.c_str(), std::ios::out);
+   }
+
+   outStream << animation.printFrames();
+
+   outStream.close();
+}
+
+void loadFrames()
+{
+   std::ifstream inStream;
+   std::string fileName;
+   char ch;
+
+   while ( std::cin.get ( ch ) && ch != '\n' )
+      ;
+
+   std::cout << "What is the name of the file? ";
+   getline(std::cin, fileName);
+
+   inStream.open(fileName.c_str(), std::ios::in);
+
+   while (!inStream.is_open())
+   {
+      std::cout << "What is the name of the file? ";
+      getline(std::cin, fileName);
+
+      inStream.open(fileName.c_str(), std::ios::in);
+   }
+
+   std::string line, xStr, yStr, wStr, hStr, delayStr;
+   std::string::size_type yNdx, hNdx;
+   SDL_Rect rect;
+   /*
+      Frame: ###
+      X: ###  Y: ###
+      Width: ###  Height: ###
+      Delay: ###
+   */
+
+   while (getline(inStream, line))
+   {
+      // Get "Frame: ###" line
+      if (line.find("Frame:") == std::string::npos)
+      {
+         std::cout << "Incorrect file format in " << fileName << ". Line: " << line;
+         break;
+      }
+
+      // Get "X: ## Y: ##" line
+      getline(inStream, line);
+      yNdx = line.find("Y: ");
+      if (line.find("X: ") == std::string::npos || yNdx == std::string::npos)
+      {
+         std::cout << "Incorrect file format in " << fileName << ". Line: " << line;
+         break;
+      }
+
+      // 3 is where "X: " ends
+      xStr = line.substr(3, yNdx - 4);
+      rect.x = atoi(xStr.c_str());
+
+      yStr = line.substr(yNdx + 3);
+      rect.y = atoi(yStr.c_str());
+
+      // Get "Width: ## Height: ##" line
+      getline(inStream, line);
+      hNdx = line.find("Height: ");
+      if (line.find("Width: ") == std::string::npos || yNdx == std::string::npos)
+      {
+         std::cout << "Incorrect file format in " << fileName << ". Line: " << line;
+         break;
+      }
+
+      // 6 is where "Width: " ends
+      wStr = line.substr(7, hNdx - 7);
+      rect.w = atoi(wStr.c_str());
+
+      hStr = line.substr(hNdx + 8);
+      rect.h = atoi(hStr.c_str());
+
+      // Get "Delay: ###" line
+      getline(inStream, line);
+      if (line.find("Delay: ") == std::string::npos)
+      {
+         std::cout << "Incorrect file format in " << fileName << ". Line: " << line;
+         break;
+      }
+      
+      // Disregard delay, disregard newline
+      getline(inStream, line);
+
+      animation.addFrame(rect, (Uint32) (1.0 / fps * 1000));
+   }
+
+   inStream.close();
+}
+
+void changeFPS()
+{
+   std::cout << "Enter new frame rate: ";
+   std::cin >> fps;
+
+   for (unsigned int i = 0; i < animation.getFrameCount(); i++)
+   {
+      animation.setDelay(i, (Uint32)(1.0 / fps * 1000));
+   }
 }

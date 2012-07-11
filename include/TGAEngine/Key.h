@@ -1,9 +1,23 @@
+/**
+ * @file Key.h
+ *
+ * @author Tag Ashby
+ * @date 7/2012
+ *
+ */
 #pragma once
 
 #include "ProjIncludes.h"
 
 namespace TGA
 {
+   /**
+    * @enum Key
+    *
+    * May seem redundant (and it kind of is), but it maps corresponding keys from
+    * SDLK_ form to my own form.
+    *
+    */
 	enum Key
 	{
 		key_A = SDLK_a,

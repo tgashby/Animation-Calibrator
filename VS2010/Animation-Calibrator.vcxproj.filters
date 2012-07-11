@@ -1,270 +1,240 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<ItemGroup>
-		<Filter Include="include">
-			<UniqueIdentifier>{37CDB9BA-C923-B446-9ECA-A472CCAA66CC}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="include\SDL">
-			<UniqueIdentifier>{7BFE2249-E080-8D41-B2CD-21AC70045112}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="include\SDL_image">
-			<UniqueIdentifier>{200AB5B7-EB31-CF40-A884-4158E4F5AC35}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="include\TGAEngine">
-			<UniqueIdentifier>{93AE6558-CC14-CF4E-99FB-D9C2A26742A1}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="src">
-			<UniqueIdentifier>{84CB390A-F6F5-AB42-8809-416927A33DA7}</UniqueIdentifier>
-		</Filter>
-	</ItemGroup>
-	<ItemGroup>
-		<ClInclude Include="..\include\SDL\begin_code.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\close_code.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_assert.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_atomic.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_audio.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_blendmode.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_clipboard.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_config.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_config_android.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_config_iphoneos.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_config_macosx.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_config_minimal.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_config_nintendods.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_config_pandora.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_config_windows.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_config_wiz.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_copying.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_cpuinfo.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_endian.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_error.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_events.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_gesture.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_haptic.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_hints.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_input.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_joystick.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_keyboard.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_keycode.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_loadso.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_log.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_main.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_mouse.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_mutex.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_name.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_opengl.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_opengles.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_opengles2.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_pixels.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_platform.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_power.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_quit.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_rect.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_render.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_revision.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_rwops.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_scancode.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_shape.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_stdinc.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_surface.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_system.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_syswm.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_thread.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_timer.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_touch.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_types.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_version.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL\SDL_video.h">
-			<Filter>include\SDL</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\SDL_image\SDL_image.h">
-			<Filter>include\SDL_image</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\Animation.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\AnimationManager.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\App.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\Camera.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\Engine.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\Font.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\FontManager.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\GraphicsManager.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\InputManager.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\Key.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\Process.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\ProcessManager.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\ProjIncludes.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\Purpose.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\Singleton.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\Sound.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\SoundManager.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\State.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\StateManager.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\Texture.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\TextureManager.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-		<ClInclude Include="..\include\TGAEngine\Vector2D.h">
-			<Filter>include\TGAEngine</Filter>
-		</ClInclude>
-	</ItemGroup>
-	<ItemGroup>
-		<ClCompile Include="..\src\AnimationCalibrator.cpp">
-			<Filter>src</Filter>
-		</ClCompile>
-	</ItemGroup>
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{37CDB9BA-C923-B446-9ECA-A472CCAA66CC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\SDL">
+      <UniqueIdentifier>{7BFE2249-E080-8D41-B2CD-21AC70045112}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\SDL_image">
+      <UniqueIdentifier>{200AB5B7-EB31-CF40-A884-4158E4F5AC35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\TGAEngine">
+      <UniqueIdentifier>{93AE6558-CC14-CF4E-99FB-D9C2A26742A1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{84CB390A-F6F5-AB42-8809-416927A33DA7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\SDL\begin_code.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\close_code.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_assert.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_atomic.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_audio.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_blendmode.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_clipboard.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_config.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_config_android.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_config_iphoneos.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_config_macosx.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_config_minimal.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_config_nintendods.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_config_pandora.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_config_windows.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_config_wiz.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_copying.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_cpuinfo.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_endian.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_error.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_events.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_gesture.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_haptic.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_hints.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_input.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_joystick.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_keyboard.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_keycode.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_loadso.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_log.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_main.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_mouse.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_mutex.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_name.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_opengl.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_opengles.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_opengles2.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_pixels.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_platform.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_power.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_quit.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_rect.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_render.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_revision.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_rwops.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_scancode.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_shape.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_stdinc.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_surface.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_system.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_syswm.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_thread.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_timer.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_touch.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_types.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_version.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL\SDL_video.h">
+      <Filter>include\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDL_image\SDL_image.h">
+      <Filter>include\SDL_image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TGAEngine\Animation.h">
+      <Filter>include\TGAEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TGAEngine\AnimationManager.h">
+      <Filter>include\TGAEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TGAEngine\Camera.h">
+      <Filter>include\TGAEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TGAEngine\Engine.h">
+      <Filter>include\TGAEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TGAEngine\GraphicsManager.h">
+      <Filter>include\TGAEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TGAEngine\InputManager.h">
+      <Filter>include\TGAEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TGAEngine\Key.h">
+      <Filter>include\TGAEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TGAEngine\ProjIncludes.h">
+      <Filter>include\TGAEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TGAEngine\Singleton.h">
+      <Filter>include\TGAEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TGAEngine\Texture.h">
+      <Filter>include\TGAEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TGAEngine\TextureManager.h">
+      <Filter>include\TGAEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TGAEngine\Vector2D.h">
+      <Filter>include\TGAEngine</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\AnimationCalibrator.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>
