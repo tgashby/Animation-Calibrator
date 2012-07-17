@@ -435,10 +435,13 @@ void saveFrames()
 {
    std::ofstream outStream;
    std::string fileName;
+   
+#if defined(WIN32) || defined(_WIN32)
    char ch;
    
    while ( std::cin.get ( ch ) && ch != '\n' )
       ;
+#endif
 
    std::cout << "What do you want to name the file? ";
    getline(std::cin, fileName);
@@ -462,10 +465,13 @@ void loadFrames()
 {
    std::ifstream inStream;
    std::string fileName;
+   
+#if defined(WIN32) || defined(_WIN32)
    char ch;
 
    while ( std::cin.get ( ch ) && ch != '\n' )
       ;
+#endif
 
    std::cout << "What is the name of the file? ";
    getline(std::cin, fileName);
@@ -474,7 +480,7 @@ void loadFrames()
 
    while (!inStream.is_open())
    {
-      std::cout << "What is the name of the file? ";
+      std::cout << "Couldn't open that file, try again: ";
       getline(std::cin, fileName);
 
       inStream.open(fileName.c_str(), std::ios::in);

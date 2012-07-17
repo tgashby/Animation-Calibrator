@@ -227,7 +227,7 @@ namespace TGA
 		GLuint currFrame;
 
 		// The last time this animation was updated
-		Uint64 lastUpdate;
+		Uint32 lastUpdate;
 
 		bool paused;
 		bool done;
