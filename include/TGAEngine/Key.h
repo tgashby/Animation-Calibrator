@@ -57,6 +57,19 @@ namespace TGA
 		key_9 = SDLK_9,
 		key_0 = SDLK_0,
 		key_TAB = SDLK_TAB,
-		key_SPACE = SDLK_SPACE
+		key_SPACE = SDLK_SPACE,
+      key_F1 = SDLK_F1,
+      key_F2 = SDLK_F2,
+      key_F3 = SDLK_F3,
+      key_F4 = SDLK_F4,
+      key_F5 = SDLK_F5,
+      key_F6 = SDLK_F6,
+      key_F7 = SDLK_F7,
+      key_F8 = SDLK_F8,
+      key_F9 = SDLK_F9,
+      key_F10 = SDLK_F10,
+      key_F11 = SDLK_F11,
+      key_F12 = SDLK_F12,
+      key_BACKQUOTE = SDLK_BACKQUOTE
 	};
 }

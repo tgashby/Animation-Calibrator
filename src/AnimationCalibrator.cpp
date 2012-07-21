@@ -12,6 +12,8 @@
 #include <Texture.h>
 #include <Animation.h>
 #include <GraphicsManager.h>
+#include <Engine.h>
+#include <BoundingBox.h>
 
 
 void displayMenu();
@@ -31,7 +33,8 @@ void loadFrames();
 void changeFPS();
 
 //SDL_Window* window;
-TGA::GraphicsManager* graphicsMan;
+TGA::Engine* engine;
+//TGA::GraphicsManager* graphicsMan;
 TGA::Texture* texture;
 TGA::Animation animation;
 int SCREEN_WIDTH = 1024;
@@ -41,7 +44,8 @@ int fps = 0;
 int main(int argc, char **argv)
 {
 	texture = new TGA::Texture();
-   graphicsMan = new TGA::GraphicsManager();
+   engine = new TGA::Engine();
+   //graphicsMan = new TGA::GraphicsManager();
 
 	std::string fileName;
 
@@ -57,7 +61,7 @@ int main(int argc, char **argv)
 	getline(std::cin, fileName);
 
    // Initialize the window to render into.
-   graphicsMan->init(SCREEN_WIDTH, SCREEN_HEIGHT, "Animation Calibrator", 20, 30);
+   engine->Graphics->init(SCREEN_WIDTH, SCREEN_HEIGHT, "Animation Calibrator", 20, 30);
 
 	// WHILE the texture hasn't loaded successfully
 	while(!texture->loadTexture(fileName))
@@ -169,7 +173,7 @@ int main(int argc, char **argv)
 	texture->deleteMe();
 	animation.deleteMe();
 
-   delete graphicsMan;
+   delete engine;
 
    exit(0);
 }
@@ -199,22 +203,22 @@ void addFrame()
 {
 	bool adding = true;
 	//Uint32 delay;
-	SDL_Rect frameRect;
+	TGA::BoundingBox frameRect;
 	char keepGoing;
 
 	while(adding)
 	{
 		std::cout << "Enter the left-most x point (0 if image is laid out vertically): ";
-      frameRect.x = getValidatedInput<int>();
+      frameRect.setX(getValidatedInput<int>());
 
 		std::cout << "Enter the top-most y point (0 if image is laid out horizontally): ";
-      frameRect.y = getValidatedInput<int>();
+      frameRect.setY(getValidatedInput<int>());
 
 		std::cout << "Enter the width: ";
-      frameRect.w = getValidatedInput<int>();
+      frameRect.setWidth(getValidatedInput<int>());
 
 		std::cout << "Enter the height: ";
-		frameRect.h = getValidatedInput<int>();
+		frameRect.setHeight(getValidatedInput<int>());
 
       // Removed individual delays
 		//std::cout << "Enter the delay (in milliseconds): ";
@@ -285,9 +289,10 @@ void viewFrame()
 
 	animation.goToFrame(frame);
 
-	animation.draw((GLfloat)SCREEN_WIDTH / 2 - texture->getWidth(), (GLfloat)SCREEN_HEIGHT / 2 - texture->getHeight());
+	animation.draw((GLfloat)SCREEN_WIDTH / 2 - texture->getWidth(), 
+      (GLfloat)SCREEN_HEIGHT / 2 - texture->getHeight());
 
-   graphicsMan->swapBuffers();
+   engine->Graphics->swapBuffers();
 }
 
 void playAnimation()
@@ -304,9 +309,10 @@ void playAnimation()
 	{
 		animation.update();
 
-		animation.draw((GLfloat)SCREEN_WIDTH / 2 - animation.getCurrentFrameDimensions().w / 2, (GLfloat)SCREEN_HEIGHT / 2 - animation.getCurrentFrameDimensions().h / 2);
+		animation.draw((GLfloat)SCREEN_WIDTH / 2 - animation.getCurrentFrameDimensions().getWidth() / 2, 
+         (GLfloat)SCREEN_HEIGHT / 2 - animation.getCurrentFrameDimensions().getHeight() / 2);
 
-		graphicsMan->swapBuffers();
+		engine->Graphics->swapBuffers();
 	}
 
 	std::cout << "Hope you liked it!\n";
@@ -335,7 +341,7 @@ void resetTexture()
 
 void setDimensions()
 {
-	SDL_Rect newRect;
+	TGA::BoundingBox newRect;
 
 	std::cout << "Enter the frame number: ";
 
@@ -343,16 +349,16 @@ void setDimensions()
 	frame = getValidatedInput<GLuint>();
 
 	std::cout << "Enter the new left-most x position: ";
-	newRect.x = getValidatedInput<int>();
+	newRect.setX(getValidatedInput<int>());
 
 	std::cout << "Enter the new top-most y position: ";
-	newRect.y = getValidatedInput<int>();
+	newRect.setY(getValidatedInput<int>());
 
 	std::cout << "Enter the new width: ";
-	newRect.w = getValidatedInput<int>();
+	newRect.setWidth(getValidatedInput<int>());
 	
 	std::cout << "Enter the new height: ";
-	newRect.h = getValidatedInput<int>();
+	newRect.setHeight(getValidatedInput<int>());
 
 	animation.setFrameBounds(frame, newRect);
 	std::cout << "New dimensions set.\n";
@@ -488,7 +494,7 @@ void loadFrames()
 
    std::string line, xStr, yStr, wStr, hStr, delayStr;
    std::string::size_type yNdx, hNdx;
-   SDL_Rect rect;
+   TGA::BoundingBox rect;
    /*
       Frame: ###
       X: ###  Y: ###
@@ -516,10 +522,10 @@ void loadFrames()
 
       // 3 is where "X: " ends
       xStr = line.substr(3, yNdx - 4);
-      rect.x = atoi(xStr.c_str());
+      rect.setX(atoi(xStr.c_str()));
 
       yStr = line.substr(yNdx + 3);
-      rect.y = atoi(yStr.c_str());
+      rect.setY(atoi(yStr.c_str()));
 
       // Get "Width: ## Height: ##" line
       getline(inStream, line);
@@ -532,10 +538,10 @@ void loadFrames()
 
       // 6 is where "Width: " ends
       wStr = line.substr(7, hNdx - 7);
-      rect.w = atoi(wStr.c_str());
+      rect.setWidth(atoi(wStr.c_str()));
 
       hStr = line.substr(hNdx + 8);
-      rect.h = atoi(hStr.c_str());
+      rect.setHeight(atoi(hStr.c_str()));
 
       // Get "Delay: ###" line
       getline(inStream, line);

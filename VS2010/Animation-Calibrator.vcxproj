@@ -73,6 +73,11 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>SDL_main</EntryPointSymbol>
     </Link>
+    <PreBuildEvent>
+      <Command>robocopy /s $(OutDir)..\..\Libraries\TGAEngine\lib\ $(OutDir)..\lib\TGAEngine\ *
+robocopy $(OutDir)..\..\Libraries\TGAEngine\include\ $(OutDir)..\include\TGAEngine *.h 
+exit 0</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -102,6 +107,11 @@
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <PreBuildEvent>
+      <Command>robocopy /s $(OutDir)..\..\Libraries\TGAEngine\lib\ $(OutDir)..\lib\TGAEngine\ *
+robocopy $(OutDir)..\..\Libraries\TGAEngine\include\ $(OutDir)..\include\TGAEngine *.h 
+exit 0</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\SDL\begin_code.h" />
